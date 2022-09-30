@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#251F47"
+    app:layout_constraintCircleRadius="20dp"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="220dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="88dp"
+        android:text="Bem Vindo!"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="260dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="76dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/senha"
+        android:layout_width="260dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="76dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:textColor="#000000"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
+
+    <Button
+        android:id="@+id/btLogin"
+        android:layout_width="151dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="128dp"
+        android:backgroundTint="#404E7C"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/senha" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="180dp"
+        android:text="Não tem uma conta?"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txtCriarconta"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCriarconta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="180dp"
+        android:text="Crie já a sua."
+        android:textColor="#A5C4D4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="148dp"
+        android:text="Entre na sua conta"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginBottom="9dp"
+        android:text="CPF/CNPJ"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginBottom="8dp"
+        android:text="SENHA"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/senha"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/stat_notify_chat" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

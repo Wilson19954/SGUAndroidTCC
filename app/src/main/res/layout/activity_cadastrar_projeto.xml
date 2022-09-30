@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastrarProjeto"
+    android:background="#251F47">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="135dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="136dp"
+        android:backgroundTint="#404E7C"
+        android:text="CADASTRAR"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria" />
+
+    <EditText
+        android:id="@+id/etNomeProjeto"
+        android:layout_width="280dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="68dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="158dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="112dp"
+        android:text="PROJETO"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtcustoprojeto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="24dp"
+        android:text="CUSTO"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNomeProjeto" />
+
+    <TextView
+        android:id="@+id/txtnomeprojeto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="8dp"
+        android:text="NOME DO PROJETO"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="280dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtcustoprojeto" />
+
+    <TextView
+        android:id="@+id/txtdescprojeto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="36dp"
+        android:text="DESCRIÇÃO"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+    <TextView
+        android:id="@+id/txtcategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="72dp"
+        android:text="CATEGORIA"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery"
+        tools:layout_editor_absoluteY="526dp" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="272dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="73dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtdescprojeto" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:text="Adicione fotos ao seu projeto:"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/txtcategoria"
+        app:layout_constraintEnd_toStartOf="@+id/imageView" />
+
+    <Spinner
+        android:id="@+id/spinnerCategoria"
+        android:layout_width="280dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/rounded_corner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtcategoria" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

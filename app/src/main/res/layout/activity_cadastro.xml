@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Cadastro"
+    android:background="#251F47">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CADASTRO"
+                android:textSize="30dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="120dp"
+                android:textColor="#FFFFFF" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="100dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginBottom="35dp"/>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TIPO DE USUÁRIO"
+                android:layout_marginLeft="78dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#FFFFFF"
+
+                />
+
+            <EditText
+                android:id="@+id/etTipoUser"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NOME"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etNome"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"/>
+
+            <TextView
+                android:id="@+id/Telefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TELEFONE"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etTelefone"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:inputType="phone"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ENDEREÇO"
+                android:layout_marginTop="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etEndereco"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                android:inputType="textPostalAddress" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EMAIL"
+                android:layout_marginTop="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="78dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                android:inputType="textEmailAddress"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CPF/CNPJ"
+                android:layout_marginTop="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etCpfcnpj"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:background="@drawable/rounded_corner"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                android:ems="10"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SENHA"
+                android:layout_marginTop="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etSenha"
+                android:layout_width="260dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BIO"
+                android:layout_marginTop="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/etBio"
+                android:layout_width="260dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Insira uma foto de perfil"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="70dp"
+                    />
+
+                <ImageView
+
+                    android:id="@+id/imgcamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_camera"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginLeft="3dp"
+                     />
+
+                <ImageView
+                    android:id="@+id/imggaleria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="9dp"
+                    app:srcCompat="@android:drawable/ic_menu_gallery"
+                    android:layout_marginRight="80dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btcriarconta"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="130dp"
+                android:text="Cadastrar"
+                android:backgroundTint="#404E7C"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

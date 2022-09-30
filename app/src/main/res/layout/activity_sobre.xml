@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Sobre"
+    android:background="#251F47">
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="127dp"
+        android:text="GRUPO START GROW UP"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="315dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="50dp"
+        android:text="Somos uma das  equipes de TCC da Escola Senai Professor Dr. Euryclides de Jesus Zerbini, formado pelos alunos Wilson Rafael, Marina Bex, Pedro Lemos e Kauã Sidnei.  "
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        app:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="329dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="35dp"
+        android:text="Escolhemos trabalhar com Desenvolvimento Web e mobile, construindo essa plataforma/rede-social."
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="329dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="36dp"
+        android:text="Wireframing by Bex and Pedro.
+Front-End web by Bex e Kauã
+Back-End and Database by Pedro Lemos
+Android Front-End e Back-End by Wilson Rafael"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="321dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="35dp"
+        android:text="Mesmo assim, com atividades designadas, durante o projeto, todos da equipe participaram em todas as partes do projeto, tornando mais viável e com um melhor resultado final."
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="172dp"
+        android:text="Sobre nós"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="11dp"
+        android:text="Esperamos uma ótima experiência dos usuários e lembre-se: "
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="116dp"
+        android:layout_marginBottom="180dp"
+        android:text="Começe seu Grow Up agora!"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="157dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25"
+        app:srcCompat="@drawable/logoazulclaro" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="76dp"
+        android:text="Alguma dúvida ou sugestão? Contate-nos"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="189dp"
+        android:text="email"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+</androidx.constraintlayout.widget.ConstraintLayout>

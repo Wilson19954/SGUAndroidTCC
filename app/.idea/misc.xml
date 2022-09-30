@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/drawable/bordas.xml" value="0.3828125" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/drawable/rounded_corner.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_cadastrar_projeto.xml" value="0.33" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_cadastro.xml" value="0.2" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_perfil.xml" value="0.5" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_sobre.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_tela_perfil.xml" value="0.33" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_tela_principal.xml" value="0.33" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/activity_teste_tela.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/layout/tela_postagem.xml" value="0.33" />
+        <entry key="..\:/Users/aluno/Documents/Will/SGUbackup2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_adicionar_publicacao.xml" value="0.22" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_cadastrar_projeto.xml" value="0.18" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_cadastro.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_login.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_main.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_nova_tela_perfil.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_sobre.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/activity_tela_perfil_p.xml" value="0.22" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/fragment_fotos.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/fragment_projetos.xml" value="0.22" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/fragment_publicacoes.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/wilso/OneDrive/Documentos/Senai/3 Termo/TCC/SGUbackup2/app/src/main/res/layout/tela_postagem.xml" value="0.15" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

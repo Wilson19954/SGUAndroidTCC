@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1257323534/SGU.iml" filepath="$PROJECT_DIR$/.idea/modules/-1257323534/SGU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SGU.app.iml" filepath="$PROJECT_DIR$/.idea/modules/SGU.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SGU.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/SGU.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SGU.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SGU.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SGU.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/SGU.app.unitTest.iml" />
+    </modules>
+  </component>
+</project>
