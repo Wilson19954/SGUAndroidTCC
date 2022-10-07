@@ -2,4 +2,21 @@
     <string name="app_name">SGU</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="txtBtFoto">Escolher foto do perfil</string>
+    <string name="txtBtCadastrar">Cadastrar no banco de dados</string>
+    <string name="txtBtAtualizar">Atualizar no banco de dados</string>
+    <string name="txtBtLogin">Acessar aplicativo</string>
+    <string name="txtBtCadastrarNovo">Cadastrar nova conta</string>
+
+    <string name="txtTituloAlert">Deseja mesmo apagar?</string>
+    <string name="txtApagarSim">Sim</string>
+    <string name="txtApagarNao">Cancelar</string>
+
+    <string name="avisoOk">Dados enviados com sucesso!</string>
+    <string name="avisoErro">Não foi possível completar a solicitação</string>
+    <string name="avisoAcessoOk">Login efetuado com sucesso!</string>
+    <string name="avisoAcessoErro">E-mail ou senha incorretos</string>
+    <string name="removerOk">Usuário removido!</string>
+
 </resources>
