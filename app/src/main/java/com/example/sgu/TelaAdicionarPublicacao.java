@@ -79,7 +79,6 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         });
     }
     private void enviarDadosWebservice(){
-        //Indicando que irá utilizar o webservice rodando no localhost do computador
         String url = "http://10.0.2.2:5000/api/Publicacoes";
 
         try {
@@ -136,15 +135,9 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
     ActivityResultLauncher<Intent> resultadoCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            //Testar se há mesmo algo retornando da tela da câmera
             if(result.getResultCode() == RESULT_OK){
-                //Pegamos o conteúdo enviado pela câmera, o qual está no objeto "result" do método acima
                 Bundle extras = result.getData().getExtras();
-                //Desse conteúdo inteiro, precisamos pegar um extra chamado "data"
-                //que é onde a foto está armazenada e converter para Bitmap
                 fotoEscolhida = (Bitmap) extras.get("data");
-
-                //Colocar a imagem no ImageView da tela
                 imgPub.setImageBitmap(fotoEscolhida);
                 imgPub.setRotation(90);
             }
@@ -152,14 +145,9 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
     });
 
     private boolean camposVazios(){
-        //Criar um objeto do ConstraintLayout que é aonde todos os EditTexts estão
         ConstraintLayout telaComponentes = findViewById(R.id.telaPublicacoes);
-
-        //Laço para percorrer todos os componentes dentro do ConstraintLayout
         for (int i = 0; i < telaComponentes.getChildCount(); i++) {
-            //Recupera o primeiro componente encontrado
             View view = telaComponentes.getChildAt(i);
-            //Verifica se esse componente é um EditText
             if (view instanceof EditText) {
                 if(((EditText) view).getText().toString().equals("")){
                     return true;
@@ -170,16 +158,10 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
     }
 
     private void limparCampos(){
-        //Criar um objeto do ConstraintLayout que é aonde todos os EditTexts estão
         ConstraintLayout telaComponentes = findViewById(R.id.telaPublicacoes);
-
-        //Laço para percorrer todos os componentes dentro do ConstraintLayout
         for (int i = 0; i < telaComponentes.getChildCount(); i++) {
-            //Recupera o primeiro componente encontrado
             View view = telaComponentes.getChildAt(i);
-            //Verifica se esse componente é um EditText
             if (view instanceof EditText) {
-                //Limpa o texto
                 ((EditText) view).setText("");
             }
         }
