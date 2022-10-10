@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sgu">
-
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,7 +13,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.SGU">
         <activity
-            android:name=".AdicionarPublicacao"
+            android:name=".TelaAdicionarPublicacao"
             android:exported="false" />
         <activity
             android:name=".NovaTelaPerfil"
@@ -28,10 +28,10 @@
             android:name=".CadastrarProjeto"
             android:exported="true" />
         <activity
-            android:name=".Cadastro"
+            android:name=".TelaCadastro"
             android:exported="true" />
         <activity
-            android:name=".Login"
+            android:name=".TelaLogin"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

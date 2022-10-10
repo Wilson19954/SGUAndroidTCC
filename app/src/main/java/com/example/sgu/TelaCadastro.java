@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -32,11 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class Cadastro extends AppCompatActivity {
+public class TelaCadastro extends AppCompatActivity {
 
     Button btCadastrar;
     ImageView imgcamera, imggaleria, imgFoto;
@@ -69,7 +65,7 @@ public class Cadastro extends AppCompatActivity {
         btCadastrar.setOnClickListener(view -> {
             //Verificar se algum campo ficou sem preencher
             if(camposVazios()){
-                Toast.makeText(Cadastro.this, "Verifique se ficou algum campo vazio", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TelaCadastro.this, "Verifique se ficou algum campo vazio", Toast.LENGTH_SHORT).show();
             }else{
                enviarDadosWebservice();
             }
@@ -212,7 +208,7 @@ public class Cadastro extends AppCompatActivity {
                         }
                     }
             );
-            RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
+            RequestQueue requisicao = Volley.newRequestQueue(TelaCadastro.this);
             requisicao.add(configRequisicao);
         }catch (Exception exc){
             exc.printStackTrace();

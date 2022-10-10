@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/telaLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#251F47"
     app:layout_constraintCircleRadius="20dp"
-    tools:context=".Login">
+    tools:context=".TelaLogin">
 
     <TextView
         android:id="@+id/textView"
@@ -18,11 +19,10 @@
         android:textColor="#FFFFFF"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/login"
+        android:id="@+id/edLogin"
         android:layout_width="260dp"
         android:layout_height="38dp"
         android:layout_marginTop="100dp"
@@ -35,17 +35,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/senha"
+        android:id="@+id/edSenha"
         android:layout_width="260dp"
         android:layout_height="38dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="76dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
-        android:textColor="#000000"
         android:inputType="textPassword"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/edLogin" />
 
     <Button
         android:id="@+id/btLogin"
@@ -58,7 +58,7 @@
         android:textColor="#FFFFFF"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/senha" />
+        app:layout_constraintTop_toBottomOf="@+id/edSenha" />
 
     <TextView
         android:id="@+id/textView2"
@@ -104,7 +104,7 @@
         android:layout_marginBottom="9dp"
         android:text="CPF/CNPJ"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintBottom_toTopOf="@+id/edLogin"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -115,7 +115,7 @@
         android:layout_marginBottom="8dp"
         android:text="SENHA"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/senha"
+        app:layout_constraintBottom_toTopOf="@+id/edSenha"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView

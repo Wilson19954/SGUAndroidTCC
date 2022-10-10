@@ -9,71 +9,92 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    List<Publicacoes> listaPublicacoes = new ArrayList<>();
     ImageView adicionarPub;
-    ImageView iconPerfil;
-    TextView txtnomeperfil;
-
-    private List<postagem> postagem = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-
-        //Define Layout
-        this.prepararPostagens();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        //Define Adapter
-        postagemAdapter postagemAdapter = new postagemAdapter(postagem);
-
-        recyclerView.setAdapter(postagemAdapter);
-
         adicionarPub = findViewById(R.id.adicionarPub2);
         adicionarPub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AdicionarPublicacao.class));
+                startActivity(new Intent(MainActivity.this, TelaAdicionarPublicacao.class));
             }
         });
 
-        iconPerfil = findViewById(R.id.iconperfil);
-        iconPerfil.setOnClickListener(new View.OnClickListener() {
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+
+        String url = "http://10.0.2.2:5000/api/Publicacoes";
+        RequestQueue solicitacao = Volley.newRequestQueue(this);
+
+        JsonArrayRequest envio = new JsonArrayRequest(
+                Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for(int i=0 ; i<response.length() ; i++){
+                            try {
+                                JSONObject object = response.getJSONObject(i);
+
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                Date dataFinal = null;
+                                try {
+                                    dataFinal = format.parse(object.getString("data"));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Publicacoes pub = new Publicacoes(object.getString("desc"),
+                                        object.getInt("cod"),
+                                        object.getString("doc_user"),
+                                        object.getString("tag"),
+                                        object.getString("like"),
+                                        object.getString("img"),
+                                        dataFinal.getTime());
+                                listaPublicacoes.add(pub);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
+                            recyclerView.setAdapter(adapter);
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, TelaPerfilP.class));
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(MainActivity.this, "Erro ao conectar", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        txtnomeperfil = findViewById(R.id.txtnomeperfil);
-        txtnomeperfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, TelaPerfilP.class));
-            }
-        });
-
-    }
-    public void prepararPostagens(){
-        postagem p = new postagem("Wilson","Nova Pub", R.drawable.r);
-        this.postagem.add(p);
-
-        postagem p2 = new postagem("Victor","New Pub", R.drawable.h);
-        this.postagem.add(p2);
-
-        postagem p3 = new postagem("Andrielly","Pub", R.drawable.d);
-        this.postagem.add(p3);
-
-        postagem p4 = new postagem("Danna","Shit", R.drawable.a);
-        this.postagem.add(p4);
+        }
+        );
+        solicitacao.add(envio);
     }
 }
