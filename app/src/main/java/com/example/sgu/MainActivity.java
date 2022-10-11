@@ -3,6 +3,7 @@ package com.example.sgu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,13 +26,24 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     List<Publicacoes> listaPublicacoes = new ArrayList<>();
     ImageView adicionarPub;
+    SwipeRefreshLayout swipe;
+    RecyclerView recyclerView;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
 
@@ -71,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-
                                 Publicacoes pub = new Publicacoes(object.getString("desc"),
                                         object.getInt("cod"),
                                         object.getString("doc_user"),
@@ -85,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
                             recyclerView.setAdapter(adapter);
+
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -96,5 +108,21 @@ public class MainActivity extends AppCompatActivity {
         }
         );
         solicitacao.add(envio);
+
+        swipe = findViewById(R.id.swipe);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
     }
+    public void RearrangeItems() {
+        // Shuffling the data of ArrayList using system time
+        Collections.shuffle(listaPublicacoes, new Random(System.currentTimeMillis()));
+        PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
+        recyclerView.setAdapter(adapter);
+    }
+
 }
