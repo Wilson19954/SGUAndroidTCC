@@ -17,13 +17,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.chrono.IsoChronology;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHolder> {
@@ -50,10 +54,8 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
         PublicacoesViewHolder viewHolder  = (PublicacoesViewHolder) holder;
         viewHolder.descPostagem.setText(listaPublicacoes.get(position).getDesc());
         viewHolder.txtData.setText(formataData(listaPublicacoes.get(position).getData()));
-
         byte[] converteBase64 = Base64.decode(listaPublicacoes.get(position).getImg(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
-
         viewHolder.imgPostagem.setImageBitmap(bitmap);
     }
 
@@ -63,6 +65,7 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String formataData(long data){
         LocalDate data_postagem = Instant.ofEpochMilli(data).atZone(ZoneId.systemDefault()).toLocalDate();
+        //LocalTime hora_postagem = Instant.ofEpochMilli(data).atZone(ZoneId.systemDefault()).toLocalTime();
         LocalDate hoje = LocalDate.now();
 
         Period diferenca = Period.between(data_postagem, hoje);
@@ -70,23 +73,35 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
         int meses = diferenca.getMonths();
         int dias = diferenca.getDays();
 
+        LocalTime horaAtual = LocalTime.now();
+        LocalTime hora2 = LocalTime.of(21, 22, 00);
 
+        long horas = ChronoUnit.HOURS.between(horaAtual, hora2);
+        long minutos = ChronoUnit.MINUTES.between(horaAtual, hora2) % 60;
+        long segundos = ChronoUnit.SECONDS.between(horaAtual, hora2) % 60;
 
-        /*LocalTime hora_postagem = Instant.ofEpochMilli(data).atZone(ZoneId.systemDefault()).toLocalTime();
-        LocalTime hora_atual = LocalTime.now();
-
-        int horas = hora_atual.getHour();
-        int minutos = hora_atual.getMinute();
-        int segundos = hora_atual.getSecond();
-        */
-
-        String d = dias == 1 ?"Publicado á " + dias + " dia " : "Publicado á " + dias + " dias ";
-        String m = meses == 1 ?"Publicado á " +  meses + " mês " :"Publicado á " +  meses + " meses ";
-        String a = anos == 1 ?"Publicado á " +  anos + " ano " :"Publicado á " +  anos + " anos ";
+        String d = dias == 1 ?"Publicado á " + dias + " dia " : "Publicado á " + dias + " dias. ";
+        String m = meses == 1 ?"Publicado á " +  meses + " mês " :"Publicado á " +  meses + " meses. ";
+        String a = anos == 1 ?"Publicado á " +  anos + " ano " :"Publicado á " +  anos + " anos. ";
+        String hour = horas == 1 ? " Publicado á " + horas + " hora" : "Publicado á " + horas + " horas. ";
+        String min = minutos == 1 ? " Publicado á " + minutos + " minuto" : "Publicado á " + horas + " minutos.";
+        String seg = segundos == 1 ? " Publicado á " + segundos + " segundo " : " Publicado á " + segundos + " segundos. ";
 
         if(anos == 0){
             if(meses == 0){
-                return d;
+                if(dias == 0){
+                    if(horas < 24){
+                        if(minutos == 0){
+                            return seg;
+                        }else{
+                            return min;
+                        }
+                    }else{
+                        return hour;
+                    }
+                }else{
+                    return d;
+                }
             }else{
                 return m + d;
             }

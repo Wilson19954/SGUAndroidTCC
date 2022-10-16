@@ -41,16 +41,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         adicionarPub = findViewById(R.id.adicionarPub2);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        swipe = findViewById(R.id.swipe);
+
+
         adicionarPub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,14 +61,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
-
         String url = "http://10.0.2.2:5000/api/Publicacoes";
         RequestQueue solicitacao = Volley.newRequestQueue(this);
-
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
                             recyclerView.setAdapter(adapter);
-
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -109,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         );
         solicitacao.add(envio);
 
-        swipe = findViewById(R.id.swipe);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -117,12 +112,15 @@ public class MainActivity extends AppCompatActivity {
                 RearrangeItems();
             }
         });
+
+
+
     }
+
     public void RearrangeItems() {
         // Shuffling the data of ArrayList using system time
         Collections.shuffle(listaPublicacoes, new Random(System.currentTimeMillis()));
         PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
         recyclerView.setAdapter(adapter);
     }
-
 }
