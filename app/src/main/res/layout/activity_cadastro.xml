@@ -52,15 +52,13 @@
 
                 />
 
-            <EditText
+            <Spinner
                 android:id="@+id/etTipoUser"
-                android:layout_width="260dp"
-                android:layout_height="38dp"
+                android:layout_width="262dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="75dp"
-                android:layout_marginRight="50dp"
                 android:background="@drawable/rounded_corner"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:entries="@array/spnTipoCadastro" />
 
             <TextView
                 android:id="@+id/textView11"

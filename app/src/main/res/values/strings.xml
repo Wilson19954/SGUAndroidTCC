@@ -27,4 +27,18 @@
         <item>Empreendimento</item>
     </string-array>
 
+    <string-array name="spnTipoCadastro">
+        <item>Pessoa Física</item>
+        <item>Startup</item>
+        <item>Investidor</item>
+    </string-array>
+
+    <string-array name="spinnerCategoria">
+        <item>Educação</item>
+        <item>Saúde</item>
+        <item>Esportes</item>
+        <item>Tecnologia</item>
+        <item>Empreendimento</item>
+    </string-array>
+
 </resources>

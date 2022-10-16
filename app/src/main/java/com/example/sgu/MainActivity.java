@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         adicionarPub = findViewById(R.id.adicionarPub2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -112,11 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 RearrangeItems();
             }
         });
-
-
-
     }
-
     public void RearrangeItems() {
         // Shuffling the data of ArrayList using system time
         Collections.shuffle(listaPublicacoes, new Random(System.currentTimeMillis()));

@@ -47,7 +47,7 @@ public class TelaLogin extends AppCompatActivity {
 
             try {
                 JSONObject dadosEnvio = new JSONObject();
-                dadosEnvio.put("doc", edLogin.getText().toString());
+                dadosEnvio.put("email", edLogin.getText().toString());
                 dadosEnvio.put("senha", edSenha.getText().toString());
 
                 JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,

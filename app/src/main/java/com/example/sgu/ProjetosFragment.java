@@ -60,15 +60,19 @@ public class ProjetosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        /*adicionarProjetos = adicionarProjetos.findViewById(R.id.adicionarProjetos);
+
+        View fragmentProjetos = inflater.inflate(R.layout.fragment_projetos, container, false);
+
+        adicionarProjetos = fragmentProjetos.findViewById(R.id.adicionarProjetos);
+
         adicionarProjetos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), CadastrarProjeto.class));
             }
-        });*/
+        });
 
-        return inflater.inflate(R.layout.fragment_projetos, container, false);
+        return fragmentProjetos;
     }
+
 }

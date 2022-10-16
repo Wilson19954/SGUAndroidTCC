@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,7 +37,8 @@ public class TelaCadastro extends AppCompatActivity {
 
     Button btCadastrar;
     ImageView imgcamera, imggaleria, imgFoto;
-    EditText edtipouser, ednome, edendereco, edemail, eddocumento, edsenha, edbio, edtelefone;
+    EditText  ednome, edendereco, edemail, eddocumento, edsenha, edbio, edtelefone;
+    Spinner edtipouser;
     Bitmap fotoEscolhida;
     private AlertDialog alert;
 
@@ -156,7 +158,7 @@ public class TelaCadastro extends AppCompatActivity {
             dadosEnvio.put("telefone", edtelefone.getText().toString());
             dadosEnvio.put("desc", edbio.getText().toString());
             dadosEnvio.put("doc", eddocumento.getText().toString());
-            dadosEnvio.put("tipo", edtipouser.getText().toString());
+            dadosEnvio.put("tipo",edtipouser.getSelectedItem().toString());
 
             //Converter a imagem de Bitmap para String no formato Base64
             //Objeto para poder converter a imagem em vetor de byte
