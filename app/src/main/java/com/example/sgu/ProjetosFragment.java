@@ -68,7 +68,7 @@ public class ProjetosFragment extends Fragment {
         adicionarProjetos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CadastrarProjeto.class));
+                startActivity(new Intent(getActivity(), TelaAdicionarProjeto.class));
             }
         });
 

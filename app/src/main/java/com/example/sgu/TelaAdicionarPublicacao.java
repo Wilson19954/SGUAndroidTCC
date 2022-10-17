@@ -61,23 +61,19 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         btPublicar = findViewById(R.id.btPublicar);
 
         btEscolherFoto.setOnClickListener(view -> {
-            //Abrir a câmera principal (traseira, por padrão) e esperar uma foto tirada dela (capturada)
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            //O "resultadoCamera" será o objeto que fará a configuração do que irá
-            //acontecer quando a foto for tirada
             resultadoCamera.launch(cameraIntent);
         });
 
         btPublicar.setOnClickListener(view -> {
-            //Verificar se algum campo ficou sem preencher
             if(camposVazios()){
                 Toast.makeText(TelaAdicionarPublicacao.this, "Verifique se ficou algum campo vazio", Toast.LENGTH_SHORT).show();
             }else{
-                    //Enviar dados para o webservice
                     enviarDadosWebservice();
             }
         });
     }
+
     private void enviarDadosWebservice(){
         String url = "http://10.0.2.2:5000/api/Publicacoes";
 
