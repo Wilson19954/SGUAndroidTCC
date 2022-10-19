@@ -22,8 +22,10 @@
 
             <ImageView
                 android:id="@+id/imgPerfil"
-                android:layout_width="match_parent"
-                android:layout_height="167dp"
+                android:layout_width="205dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/a" />
 
@@ -37,6 +39,7 @@
                     android:id="@+id/nomePerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
                     android:text="TextView"
                     android:textColor="@color/white" />
 

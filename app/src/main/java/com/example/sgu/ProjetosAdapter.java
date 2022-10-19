@@ -25,42 +25,45 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHolder> {
+public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosViewHolder> {
 
-    private List<Publicacoes> listaPublicacoes;
+    private List<Projetos> listaProjetos;
     private Context context;
     AlertDialog alert;
 
-    public PublicacoesAdapter(List<Publicacoes> listaPublicacoes, Context context){
-        this.listaPublicacoes = listaPublicacoes;
+    public ProjetosAdapter(List<Projetos> listaProjetos, Context context){
+        this.listaProjetos = listaProjetos;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public PublicacoesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tela_postagem, parent, false);
-        return new PublicacoesViewHolder(view);
+    public ProjetosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tela_projetos, parent, false);
+        return new ProjetosViewHolder(view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull PublicacoesViewHolder holder, int position) {
-        PublicacoesViewHolder viewHolder  = (PublicacoesViewHolder) holder;
-        viewHolder.descPostagem.setText(listaPublicacoes.get(position).getDesc());
-        viewHolder.txtData.setText(formataData(listaPublicacoes.get(position).getData()));
-        byte[] converteBase64 = Base64.decode(listaPublicacoes.get(position).getImg(), Base64.DEFAULT);
+    public void onBindViewHolder(@NonNull ProjetosViewHolder holder, int position) {
+        ProjetosViewHolder viewHolder  = (ProjetosViewHolder) holder;
+        viewHolder.nomeProj.setText(listaProjetos.get(position).getNome());
+        viewHolder.descProj.setText(listaProjetos.get(position).getDesc());
+        viewHolder.custoProj.setText(listaProjetos.get(position).getCusto());
+
+        /*byte[] converteBase64 = Base64.decode(listaPublicacoes.get(position).getImg(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
-        viewHolder.imgPostagem.setImageBitmap(bitmap);
+        viewHolder.imgPostagem.setImageBitmap(bitmap);*/
+
     }
 
     @Override
-    public int getItemCount() { return listaPublicacoes.size(); }
+    public int getItemCount() { return listaProjetos.size(); }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String formataData(long data){
         LocalDate data_postagem = Instant.ofEpochMilli(data).atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalTime hora_postagem = Instant.ofEpochMilli(data).atZone(ZoneId.systemDefault()).toLocalTime();
+        //LocalTime hora_postagem = Instant.ofEpochMilli(data).atZone(ZoneId.systemDefault()).toLocalTime();
         LocalDate hoje = LocalDate.now();
 
         Period diferenca = Period.between(data_postagem, hoje);
@@ -69,9 +72,7 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
         int dias = diferenca.getDays();
 
         LocalTime horaAtual = LocalTime.now();
-        LocalTime hora2 = LocalTime.of(21, 11, 00);
-
-        int minutos2 = horaAtual.getMinute() - hora_postagem.getMinute();
+        LocalTime hora2 = LocalTime.of(21, 22, 00);
 
         long horas = ChronoUnit.HOURS.between(horaAtual, hora2);
         long minutos = ChronoUnit.MINUTES.between(horaAtual, hora2) % 60;
@@ -81,20 +82,20 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
         String m = meses == 1 ?"Publicado á " +  meses + " mês " :"Publicado á " +  meses + " meses. ";
         String a = anos == 1 ?"Publicado á " +  anos + " ano " :"Publicado á " +  anos + " anos. ";
         String hour = horas == 1 ? " Publicado á " + horas + " hora" : "Publicado á " + horas + " horas. ";
-        String min = minutos == 1 ? " Publicado á " + minutos + " minuto" : "Publicado á " + minutos + " minutos.";
+        String min = minutos == 1 ? " Publicado á " + minutos + " minuto" : "Publicado á " + horas + " minutos.";
         String seg = segundos == 1 ? " Publicado á " + segundos + " segundo " : " Publicado á " + segundos + " segundos. ";
 
         if(anos == 0){
             if(meses == 0){
                 if(dias == 0){
                     if(horas < 24){
-                        if(minutos < 1){
-                            return hour + minutos2 + seg ;
+                        if(minutos == 0){
+                            return seg;
                         }else{
-                            return hour + minutos2 + seg;
+                            return min;
                         }
                     }else{
-                        return hour + minutos2 + seg ;
+                        return hour;
                     }
                 }else{
                     return d;
@@ -109,24 +110,18 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
 
 }
 
-class PublicacoesViewHolder extends RecyclerView.ViewHolder{
+class ProjetosViewHolder extends RecyclerView.ViewHolder{
 
-    ImageView imgPostagem, imgFotoPerfil;
-    TextView descPostagem, txtData, txtNomePerfil, txtCurtida;
-    ImageButton imgBtRemover, imgBtAtualizar;
+    ImageView imageProj;
+    TextView nomeProj, custoProj, descProj;
 
-    public PublicacoesViewHolder(@NonNull View itemView) {
+    public ProjetosViewHolder(@NonNull View itemView) {
         super(itemView);
-        imgFotoPerfil = itemView.findViewById(R.id.imageProj);
-        descPostagem = itemView.findViewById(R.id.descPostagem);
-        txtData = itemView.findViewById(R.id.custoProj);
-        txtNomePerfil = itemView.findViewById(R.id.nomeProj);
-        txtCurtida = itemView.findViewById(R.id.txtCurtida);
-        imgPostagem = itemView.findViewById(R.id.imgProj);
-        imgBtRemover = itemView.findViewById(R.id.like2);
-        imgBtAtualizar = itemView.findViewById(R.id.like1);
+
+        imageProj = itemView.findViewById(R.id.imageProj);
+        nomeProj = itemView.findViewById(R.id.nomeProj);
+        custoProj = itemView.findViewById(R.id.custoProj);
+        descProj = itemView.findViewById(R.id.descProj);
     }
-
-
 }
 

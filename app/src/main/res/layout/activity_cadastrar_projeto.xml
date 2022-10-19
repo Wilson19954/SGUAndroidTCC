@@ -11,7 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/textView7"
@@ -23,15 +25,6 @@
             android:textColor="#FFFFFF"
             android:textSize="18dp" />
 
-        <TextView
-            android:id="@+id/textView33"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="40dp"
-            android:text="CÓDIGO DO PROJETO"
-            android:textColor="@color/white" />
-
         <EditText
             android:id="@+id/edCod"
             android:layout_width="280dp"
@@ -39,6 +32,7 @@
             android:layout_marginLeft="60dp"
             android:background="@drawable/rounded_corner"
             android:ems="10"
+            android:hint="Cod"
             android:inputType="textPersonName" />
 
         <TextView
@@ -46,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="40dp"
             android:text="NOME DO PROJETO"
             android:textColor="#FFFFFF" />
 
@@ -157,6 +151,7 @@
             android:layout_width="135dp"
             android:layout_height="56dp"
             android:layout_marginLeft="130dp"
+            android:layout_marginTop="50dp"
             android:backgroundTint="#404E7C"
             android:text="CADASTRAR"
             android:textColor="#FFFFFF"

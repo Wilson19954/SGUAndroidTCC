@@ -83,7 +83,6 @@ public class TelaPerfilP extends AppCompatActivity {
                             }
                             /*PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
                             recyclerView.setAdapter(adapter);*/
-
                             byte[] converteBase64 = Base64.decode(listaUsuario.get(i).getImg(), Base64.DEFAULT);
                             Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
                             imgPerfil.setImageBitmap(bitmap);

@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                         for(int i=0 ; i<response.length() ; i++){
                             try {
                                 JSONObject object = response.getJSONObject(i);
-
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 Date dataFinal = null;
                                 try {
