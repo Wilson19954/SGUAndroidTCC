@@ -248,7 +248,7 @@
                 android:id="@+id/imgFoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/like" />
+                app:srcCompat="@drawable/ic_enviar" />
 
             <Button
                 android:id="@+id/btcriarconta"

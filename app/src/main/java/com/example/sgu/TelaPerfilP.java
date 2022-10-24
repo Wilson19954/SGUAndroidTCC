@@ -100,15 +100,10 @@ public class TelaPerfilP extends AppCompatActivity {
         }
         );
         solicitacao.add(envio);
-
         tabLayout.setupWithViewPager(viewPager);
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        vpAdapter.addFragment(new FotosFragment(), "Fotos");
-        vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
         vpAdapter.addFragment(new PublicacoesFragment(), "Pubs");
-
-
+        vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
         viewPager.setAdapter(vpAdapter);
-
     }
 }

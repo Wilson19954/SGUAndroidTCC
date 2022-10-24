@@ -1,7 +1,9 @@
 package com.example.sgu;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -12,10 +14,22 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -31,9 +45,15 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
     private Context context;
     AlertDialog alert;
 
+    public void setFilteredList(List<Publicacoes> filteredList){
+        this.listaPublicacoes = filteredList;
+        notifyDataSetChanged();
+    }
+
     public PublicacoesAdapter(List<Publicacoes> listaPublicacoes, Context context){
         this.listaPublicacoes = listaPublicacoes;
         this.context = context;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,12 +66,23 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull PublicacoesViewHolder holder, int position) {
+
         PublicacoesViewHolder viewHolder  = (PublicacoesViewHolder) holder;
+        viewHolder.imgBtlike.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "like!", Toast.LENGTH_SHORT).show();
+                viewHolder.txtCurtida.setText("2");
+            }
+        });
+
+        viewHolder.categoriaPub.setText(listaPublicacoes.get(position).getTag());
         viewHolder.descPostagem.setText(listaPublicacoes.get(position).getDesc());
         viewHolder.txtData.setText(formataData(listaPublicacoes.get(position).getData()));
         byte[] converteBase64 = Base64.decode(listaPublicacoes.get(position).getImg(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
         viewHolder.imgPostagem.setImageBitmap(bitmap);
+
     }
 
     @Override
@@ -112,8 +143,8 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
 class PublicacoesViewHolder extends RecyclerView.ViewHolder{
 
     ImageView imgPostagem, imgFotoPerfil;
-    TextView descPostagem, txtData, txtNomePerfil, txtCurtida;
-    ImageButton imgBtRemover, imgBtAtualizar;
+    TextView descPostagem, txtData, txtNomePerfil, txtCurtida, categoriaPub;
+    ImageButton imgBtRemover, imgBtlike;
 
     public PublicacoesViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -124,9 +155,8 @@ class PublicacoesViewHolder extends RecyclerView.ViewHolder{
         txtCurtida = itemView.findViewById(R.id.txtCurtida);
         imgPostagem = itemView.findViewById(R.id.imgProj);
         imgBtRemover = itemView.findViewById(R.id.like2);
-        imgBtAtualizar = itemView.findViewById(R.id.like1);
+        imgBtlike = itemView.findViewById(R.id.like1);
+        categoriaPub = itemView.findViewById(R.id.categoriaPub);
     }
-
-
 }
 

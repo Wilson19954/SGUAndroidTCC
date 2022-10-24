@@ -102,6 +102,7 @@ public class ProjetosFragment extends Fragment {
                 startActivity(new Intent(getActivity(), TelaAdicionarProjeto.class));
             }
         });
+
         String url = "http://10.0.2.2:5000/api/Projetos";
         RequestQueue solicitacao = Volley.newRequestQueue(getContext());
         JsonArrayRequest envio = new JsonArrayRequest(

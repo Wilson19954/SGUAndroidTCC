@@ -58,15 +58,23 @@
             <ImageView
                 android:id="@+id/imgProj"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="265dp"
                 app:srcCompat="@drawable/postagemexemplo" />
+
+            <TextView
+                android:id="@+id/categoriaPub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Categoria"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/descPostagem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Publicação Sobre Reciclagem..."
+                android:text="Descrição da publicação"
                 android:textColor="#FFFFFF" />
 
             <LinearLayout
@@ -80,6 +88,14 @@
                     android:layout_height="37dp"
                     android:backgroundTint="#251F47"
                     app:srcCompat="@drawable/ic_likes" />
+
+                <TextView
+                    android:id="@+id/txtCurtida"
+                    android:layout_width="10dp"
+                    android:layout_height="34dp"
+
+                    android:text="0"
+                    android:textColor="@color/white" />
 
                 <ImageButton
                     android:id="@+id/like2"
@@ -101,14 +117,6 @@
                     android:layout_height="37dp"
                     android:backgroundTint="#251F47"
                     app:srcCompat="@drawable/ic_commentt" />
-
-                <TextView
-                    android:id="@+id/txtCurtida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0"
-                    android:textColor="@color/white" />
 
 
             </LinearLayout>
