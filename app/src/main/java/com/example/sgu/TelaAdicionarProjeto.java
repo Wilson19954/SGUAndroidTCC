@@ -1,5 +1,7 @@
 package com.example.sgu;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Base64;
@@ -28,38 +30,41 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
     EditText edNomeProjeto, edCustoProjeto, edDescricaoProjeto, edDocUser, edCod;
     Spinner spnCategoriaProjeto;
     Button btCadastrarProjeto;
+    String document;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_projeto);
 
-        edCod = findViewById(R.id.edCod);
         edNomeProjeto = findViewById(R.id.edNomeProj);
         edCustoProjeto = findViewById(R.id.edCustoProj);
         edDescricaoProjeto = findViewById(R.id.edDescProj);
         spnCategoriaProjeto = findViewById(R.id.spnCatProj);
         btCadastrarProjeto = findViewById(R.id.btCadProj);
-        edDocUser = findViewById(R.id.edDocUsu);
-
         btCadastrarProjeto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                enviarDadosWebservice();
-            }
+            public void onClick(View v) {enviarDadosWebservice();}
         });
     }
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
+    }
+
     private void enviarDadosWebservice(){
+        recuperarDados();
         String url = "http://10.0.2.2:5000/api/Projetos";
         try {
 
             JSONObject dadosEnvio = new JSONObject();
-            dadosEnvio.put("cod", edCod.getText().toString());
+            dadosEnvio.put("cod", "");
             dadosEnvio.put("desc", edDescricaoProjeto.getText().toString());
             dadosEnvio.put("custo", edCustoProjeto.getText().toString());
             dadosEnvio.put("tag",spnCategoriaProjeto.getSelectedItem().toString());
             dadosEnvio.put("nome", edNomeProjeto.getText().toString());
-            dadosEnvio.put("doc_user", edDocUser.getText().toString());
+            dadosEnvio.put("doc_user", document);
 
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                     url, dadosEnvio,

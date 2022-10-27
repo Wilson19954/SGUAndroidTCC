@@ -25,16 +25,6 @@
             android:textColor="#FFFFFF"
             android:textSize="18dp" />
 
-        <EditText
-            android:id="@+id/edCod"
-            android:layout_width="280dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:hint="Cod"
-            android:inputType="textPersonName" />
-
         <TextView
             android:id="@+id/txtnomeprojeto"
             android:layout_width="wrap_content"
@@ -106,17 +96,6 @@
             android:layout_marginLeft="60dp"
             android:background="@drawable/rounded_corner"
             android:entries="@array/spnCategoriasProj" />
-
-        <EditText
-            android:id="@+id/edDocUsu"
-            android:layout_width="280dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:hint="Documento do user"
-            android:inputType="textPersonName" />
 
         <ImageView
             android:id="@+id/imgProjeto"

@@ -2,7 +2,9 @@ package com.example.sgu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,20 +47,18 @@ public class TelaLogin extends AppCompatActivity {
         });
 
         btLogin.setOnClickListener(view -> {
+            salvarDados();
             startActivity(new Intent(TelaLogin.this, MainActivity.class));
+            //enviarDadosWebservice();
         });
     }
-    private void enviarDadosWebservice(){
-        String url = "http://10.0.2.2:5000/api/Usuario/login";
 
+    /*private void enviarDadosWebservice(){
+        String url = "http://10.0.2.2:5000/api/Usuario/login";
         try {
-            //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
             JSONObject dadosEnvio = new JSONObject();
-            //O nome dos parâmetros precisam ser iguais ao que o webservice espera receber
-            //no nosso caso são "email" e "senha"
             dadosEnvio.put("doc", edDocLogin.getText().toString());
             dadosEnvio.put("senha", edSenhaLogin.getText().toString());
-            //Configurar a requisição que será enviada ao webservice
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                     url, dadosEnvio,
                     new Response.Listener<JSONObject>() {
@@ -91,7 +91,13 @@ public class TelaLogin extends AppCompatActivity {
         }catch (Exception exc){
             exc.printStackTrace();
         }
+    }*/
+
+    private void salvarDados(){
+        String document = edDocLogin.getText().toString();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("doc", document);
+        editor.commit();
     }
-
-
 }

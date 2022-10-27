@@ -1,5 +1,7 @@
 package com.example.sgu;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,7 +36,8 @@ import java.util.List;
 public class PublicacoesFragment extends Fragment {
 
     RecyclerView recyclerView;
-    List<Publicacoes> listaPublicacoes = new ArrayList<>();
+    List<Publi> listaPubli = new ArrayList<>();
+    String document;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +53,13 @@ public class PublicacoesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String url = "http://10.0.2.2:5000/api/Publicacoes/search";
+        enviarDadosPubWebservice();
+    }
+
+
+    private void enviarDadosPubWebservice(){
+        recuperarDados();
+        String url = "http://10.0.2.2:5000/api/Publicacoes/search/"+document;
         RequestQueue solicitacao = Volley.newRequestQueue(getContext());
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -64,22 +73,25 @@ public class PublicacoesFragment extends Fragment {
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 Date dataFinal = null;
                                 try {
-                                    dataFinal = format.parse(object.getString("data"));
+                                    dataFinal = format.parse(object.getString("data_pub"));
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                Publicacoes pub = new Publicacoes(object.getString("desc"),
-                                        object.getInt("cod"),
+                                Publi publi = new Publi(
+                                        object.getString("img_pub"),
+                                        object.getString("desc_pub"),
+                                        object.getInt("like"),
+                                        object.getString("tag_pub"),
+                                        dataFinal.getTime(),
+                                        object.getString("nome_user"),
                                         object.getString("doc_user"),
-                                        object.getString("tag"),
-                                        object.getString("like"),
-                                        object.getString("img"),
-                                        dataFinal.getTime());
-                                listaPublicacoes.add(pub);
+                                        object.getString("img_user"),
+                                        object.getString("tipo_user"));
+                                listaPubli.add(publi);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, getContext());
+                            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPubli, getContext());
                             recyclerView.setAdapter(adapter);
                         }
                     }
@@ -92,6 +104,11 @@ public class PublicacoesFragment extends Fragment {
         }
         );
         solicitacao.add(envio);
-
     }
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
+    }
+
 }

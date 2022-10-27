@@ -9,8 +9,12 @@ import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.telecom.Call;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -42,12 +46,14 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Publicacoes> listaPublicacoes = new ArrayList<>();
+    List<Publi> listaPubli = new ArrayList<>();
+    List<Usuario> listaUsuario = new ArrayList<>();
     ImageView adicionarPub, iconPerfil, imgLog;
     SwipeRefreshLayout swipe;
     RecyclerView recyclerView;
-    TextView nomePerfil;
+    TextView nomePerfil, tipoUser;
     ImageButton like;
+    String document;
 
     @Override
     protected void onStart() {
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         SearchView searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,11 +83,15 @@ public class MainActivity extends AppCompatActivity {
 
         imgLog = findViewById(R.id.imgLogo);
         nomePerfil = findViewById(R.id.txtnomeperfil);
+        tipoUser = findViewById(R.id.tipoUser);
         iconPerfil = findViewById(R.id.iconperfil);
         adicionarPub = findViewById(R.id.adicionarPub2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         swipe = findViewById(R.id.swipe);
+
+        enviarDadosPubWebservice();
+        dadosSessaoWebservice();
 
         imgLog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 lManager.scrollToPositionWithOffset(0, 0);
             }
         });
-
         nomePerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               swipe.setRefreshing(false);
+               RearrangeItems();
+            }
+        });
+    }
+
+    private void enviarDadosPubWebservice(){
         String url = "http://10.0.2.2:5000/api/Publicacoes";
         RequestQueue solicitacao = Volley.newRequestQueue(this);
         JsonArrayRequest envio = new JsonArrayRequest(
@@ -125,22 +145,25 @@ public class MainActivity extends AppCompatActivity {
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 Date dataFinal = null;
                                 try {
-                                    dataFinal = format.parse(object.getString("data"));
+                                    dataFinal = format.parse(object.getString("data_pub"));
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                Publicacoes pub = new Publicacoes(object.getString("desc"),
-                                        object.getInt("cod"),
+                                Publi publi = new Publi(
+                                        object.getString("img_pub"),
+                                        object.getString("desc_pub"),
+                                        object.getInt("like"),
+                                        object.getString("tag_pub"),
+                                        dataFinal.getTime(),
+                                        object.getString("nome_user"),
                                         object.getString("doc_user"),
-                                        object.getString("tag"),
-                                        object.getString("like"),
-                                        object.getString("img"),
-                                        dataFinal.getTime());
-                                listaPublicacoes.add(pub);
+                                        object.getString("img_user"),
+                                        object.getString("tipo_user"));
+                                listaPubli.add(publi);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
+                            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPubli, MainActivity.this);
                             recyclerView.setAdapter(adapter);
                         }
                     }
@@ -150,37 +173,72 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
                 Toast.makeText(MainActivity.this, "Erro ao conectar", Toast.LENGTH_SHORT).show();
             }
-        }
-        );
+        });
         solicitacao.add(envio);
+    }
 
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    private void dadosSessaoWebservice(){
+        recuperarDados();
+        String url = "http://10.0.2.2:5000/api/Usuario/buscar/" + document;
+        RequestQueue solicitacao = Volley.newRequestQueue(this);
+        JsonArrayRequest envio = new JsonArrayRequest(
+                Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for(int i=0 ; i< response.length() ; i++) {
+                            try {
+                                JSONObject object = response.getJSONObject(i);
+                                Usuario u = new Usuario(object.getString("endereco"),
+                                        object.getString("nome"),
+                                        object.getString("desc"),
+                                        object.getString("doc"),
+                                        object.getString("telefone"),
+                                        object.getString("email"),
+                                        object.getString("img"),
+                                        object.getString("senha"),
+                                        object.getString("tipo"));
+                                listaUsuario.add(u);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            nomePerfil.setText(listaUsuario.get(i).getNome());
+                            tipoUser.setText(listaUsuario.get(i).getTipo());
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onRefresh() {
-                swipe.setRefreshing(false);
-                RearrangeItems();
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(MainActivity.this, "Erro ao conectar", Toast.LENGTH_SHORT).show();
             }
         });
+        solicitacao.add(envio);
+    }
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
     }
 
     public void RearrangeItems() {
-        // Shuffling the data of ArrayList using system time
-        Collections.shuffle(listaPublicacoes, new Random(System.currentTimeMillis()));
-        PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
+        Collections.shuffle(listaPubli, new Random(System.currentTimeMillis()));
+        PublicacoesAdapter adapter = new PublicacoesAdapter(listaPubli, MainActivity.this);
         recyclerView.setAdapter(adapter);
     }
 
     private void filterList(String text) {
-        List<Publicacoes> filteredList = new ArrayList<>();
-        for(Publicacoes pub : listaPublicacoes){
-            if(pub.getTag().toLowerCase().contains(text.toLowerCase())){
+        List<Publi> filteredList = new ArrayList<>();
+        for(Publi pub : listaPubli){
+            if(pub.getTag_pub().toLowerCase().contains(text.toLowerCase())){
                 filteredList.add(pub);
             }
         }
         if(filteredList.isEmpty()){
-            Toast.makeText(this, "no data Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Pesquisa não encontrada!", Toast.LENGTH_SHORT).show();
         }else{
-            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
+            PublicacoesAdapter adapter = new PublicacoesAdapter(listaPubli, MainActivity.this);
             adapter.setFilteredList(filteredList);
             recyclerView.setAdapter(adapter);
         }

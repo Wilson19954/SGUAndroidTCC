@@ -1,6 +1,8 @@
 package com.example.sgu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,8 @@ import java.util.Objects;
  */
 public class ProjetosFragment extends Fragment {
 
+
+    String document;
     ImageView adicionarProjetos;
     RecyclerView recyclerView;
     List<Projetos> listaProjetos = new ArrayList<>();
@@ -103,7 +107,10 @@ public class ProjetosFragment extends Fragment {
             }
         });
 
-        String url = "http://10.0.2.2:5000/api/Projetos";
+        recuperarDados();
+
+        String url = "http://10.0.2.2:5000/api/Projetos/search/"+document;
+
         RequestQueue solicitacao = Volley.newRequestQueue(getContext());
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -146,5 +153,10 @@ public class ProjetosFragment extends Fragment {
         }
         );
         solicitacao.add(envio);
+    }
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
     }
 }

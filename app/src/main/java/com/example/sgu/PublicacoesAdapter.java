@@ -1,9 +1,7 @@
 package com.example.sgu;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -20,17 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,16 +29,18 @@ import java.util.List;
 public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHolder> {
 
     private List<Publicacoes> listaPublicacoes;
+    private List<Publi> listaPubli;
+    private List<Usuario> listaUsuario;
     private Context context;
     AlertDialog alert;
 
-    public void setFilteredList(List<Publicacoes> filteredList){
-        this.listaPublicacoes = filteredList;
+    public void setFilteredList(List<Publi> filteredList){
+        this.listaPubli = filteredList;
         notifyDataSetChanged();
     }
 
-    public PublicacoesAdapter(List<Publicacoes> listaPublicacoes, Context context){
-        this.listaPublicacoes = listaPublicacoes;
+    public PublicacoesAdapter(List<Publi> listaPubli,  Context context){
+        this.listaPubli = listaPubli;
         this.context = context;
         notifyDataSetChanged();
     }
@@ -68,6 +57,7 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
     public void onBindViewHolder(@NonNull PublicacoesViewHolder holder, int position) {
 
         PublicacoesViewHolder viewHolder  = (PublicacoesViewHolder) holder;
+
         viewHolder.imgBtlike.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -76,17 +66,25 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
             }
         });
 
-        viewHolder.categoriaPub.setText(listaPublicacoes.get(position).getTag());
-        viewHolder.descPostagem.setText(listaPublicacoes.get(position).getDesc());
-        viewHolder.txtData.setText(formataData(listaPublicacoes.get(position).getData()));
-        byte[] converteBase64 = Base64.decode(listaPublicacoes.get(position).getImg(), Base64.DEFAULT);
+        viewHolder.txtNomePerfil.setText(listaPubli.get(position).getNome_user());
+        viewHolder.categoriaPub.setText(listaPubli.get(position).getTag_pub());
+        viewHolder.descPostagem.setText(listaPubli.get(position).getDesc_pub());
+        viewHolder.txtData.setText(formataData(listaPubli.get(position).getData_pub()));
+        //viewHolder.txtCurtida.setText(listaPubli.get(position).getLike_pub());
+
+        byte[] converteBase64_2 = Base64.decode(listaPubli.get(position).getImg_user(), Base64.DEFAULT);
+        byte[] converteBase64 = Base64.decode(listaPubli.get(position).getImg_pub(), Base64.DEFAULT);
+
+        Bitmap bitmap2 = BitmapFactory.decodeByteArray(converteBase64_2, 0, converteBase64_2.length);
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
+
         viewHolder.imgPostagem.setImageBitmap(bitmap);
+        viewHolder.imgFotoPerfil.setImageBitmap(bitmap2);
 
     }
 
     @Override
-    public int getItemCount() { return listaPublicacoes.size(); }
+    public int getItemCount() { return listaPubli.size(); }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String formataData(long data){
@@ -149,14 +147,15 @@ class PublicacoesViewHolder extends RecyclerView.ViewHolder{
     public PublicacoesViewHolder(@NonNull View itemView) {
         super(itemView);
         imgFotoPerfil = itemView.findViewById(R.id.imageProj);
+        txtNomePerfil = itemView.findViewById(R.id.nomeProj);
         descPostagem = itemView.findViewById(R.id.descPostagem);
         txtData = itemView.findViewById(R.id.custoProj);
-        txtNomePerfil = itemView.findViewById(R.id.nomeProj);
         txtCurtida = itemView.findViewById(R.id.txtCurtida);
         imgPostagem = itemView.findViewById(R.id.imgProj);
         imgBtRemover = itemView.findViewById(R.id.like2);
         imgBtlike = itemView.findViewById(R.id.like1);
         categoriaPub = itemView.findViewById(R.id.categoriaPub);
+
     }
 }
 

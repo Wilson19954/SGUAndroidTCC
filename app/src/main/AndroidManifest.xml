@@ -16,9 +16,6 @@
             android:name=".TelaAdicionarPublicacao"
             android:exported="false" />
         <activity
-            android:name=".NovaTelaPerfil"
-            android:exported="true" />
-        <activity
             android:name=".TelaPerfilP"
             android:exported="true" />
         <activity

@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -44,6 +46,8 @@ public class TelaPerfilP extends AppCompatActivity {
     TextView nomePerfil, descPerfil;
     ImageView imgPerfil;
 
+    String document;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +58,9 @@ public class TelaPerfilP extends AppCompatActivity {
         imgPerfil = findViewById(R.id.imgPerfil);
         nomePerfil = findViewById(R.id.nomePerfil);
         descPerfil = findViewById(R.id.descPerfil);
+        recuperarDados();
 
-        String url = "http://10.0.2.2:5000/api/Usuario";
-
+        String url = "http://10.0.2.2:5000/api/Usuario/buscar/" +document;
         RequestQueue solicitacao = Volley.newRequestQueue(this);
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -64,10 +68,9 @@ public class TelaPerfilP extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        for(int i=0 ; i<response.length() ; i++){
+                        for(int i=0 ; i< response.length() ; i++) {
                             try {
                                 JSONObject object = response.getJSONObject(i);
-
                                 Usuario u = new Usuario(object.getString("endereco"),
                                         object.getString("nome"),
                                         object.getString("desc"),
@@ -75,20 +78,17 @@ public class TelaPerfilP extends AppCompatActivity {
                                         object.getString("telefone"),
                                         object.getString("email"),
                                         object.getString("img"),
-                                        object.getString("senha"),
-                                        object.getString("tipo"));
-                                listaUsuario.add(u);
+                                        object.getString("tipo"),
+                                        object.getString("senha"));
+                                        listaUsuario.add(u);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            /*PublicacoesAdapter adapter = new PublicacoesAdapter(listaPublicacoes, MainActivity.this);
-                            recyclerView.setAdapter(adapter);*/
                             byte[] converteBase64 = Base64.decode(listaUsuario.get(i).getImg(), Base64.DEFAULT);
                             Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
                             imgPerfil.setImageBitmap(bitmap);
                             descPerfil.setText(listaUsuario.get(i).getDesc());
                             nomePerfil.setText(listaUsuario.get(i).getNome());
-
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -97,13 +97,20 @@ public class TelaPerfilP extends AppCompatActivity {
                 error.printStackTrace();
                 Toast.makeText(TelaPerfilP.this, "Erro ao conectar", Toast.LENGTH_SHORT).show();
             }
-        }
-        );
+        });
         solicitacao.add(envio);
         tabLayout.setupWithViewPager(viewPager);
+
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         vpAdapter.addFragment(new PublicacoesFragment(), "Pubs");
         vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
+
         viewPager.setAdapter(vpAdapter);
+
     }
+        private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
+    }
+
 }
