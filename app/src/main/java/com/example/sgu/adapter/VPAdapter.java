@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

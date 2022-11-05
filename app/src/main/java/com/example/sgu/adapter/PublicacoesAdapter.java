@@ -1,5 +1,6 @@
-package com.example.sgu;
+package com.example.sgu.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,6 +19,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
+import com.example.sgu.classes.Publi;
+import com.example.sgu.classes.Publicacoes;
+import com.example.sgu.classes.Usuario;
+
+import org.json.JSONArray;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,19 +44,19 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
 
     private List<Publicacoes> listaPublicacoes;
     private List<Publi> listaPubli;
+    private List<Publi> listaAtualizada;
     private List<Usuario> listaUsuario;
     private Context context;
     AlertDialog alert;
+    String codPub;
 
     public void setFilteredList(List<Publi> filteredList){
         this.listaPubli = filteredList;
-        notifyDataSetChanged();
     }
 
-    public PublicacoesAdapter(List<Publi> listaPubli,  Context context){
+    public PublicacoesAdapter(List<Publi> listaPubli, Context context){
         this.listaPubli = listaPubli;
         this.context = context;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -54,32 +68,41 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull PublicacoesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PublicacoesViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         PublicacoesViewHolder viewHolder  = (PublicacoesViewHolder) holder;
-
-        viewHolder.imgBtlike.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "like!", Toast.LENGTH_SHORT).show();
-                viewHolder.txtCurtida.setText("2");
-            }
-        });
-
+        String like = String.valueOf(listaPubli.get(position).getLike_pub());
         viewHolder.txtNomePerfil.setText(listaPubli.get(position).getNome_user());
         viewHolder.categoriaPub.setText(listaPubli.get(position).getTag_pub());
         viewHolder.descPostagem.setText(listaPubli.get(position).getDesc_pub());
         viewHolder.txtData.setText(formataData(listaPubli.get(position).getData_pub()));
-        //viewHolder.txtCurtida.setText(listaPubli.get(position).getLike_pub());
-
+        viewHolder.txtCurtida.setText(like);
         byte[] converteBase64_2 = Base64.decode(listaPubli.get(position).getImg_user(), Base64.DEFAULT);
         byte[] converteBase64 = Base64.decode(listaPubli.get(position).getImg_pub(), Base64.DEFAULT);
-
         Bitmap bitmap2 = BitmapFactory.decodeByteArray(converteBase64_2, 0, converteBase64_2.length);
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
-
         viewHolder.imgPostagem.setImageBitmap(bitmap);
         viewHolder.imgFotoPerfil.setImageBitmap(bitmap2);
+
+        viewHolder.imgBtLike.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                codPub = listaPubli.get(position).getCod_pub();
+                likePubWebService(position);
+                viewHolder.imgBtLike.setVisibility(View.INVISIBLE);
+                viewHolder.imgBtdeslike.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewHolder.imgBtdeslike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                codPub = listaPubli.get(position).getCod_pub();
+                deslikePubWebService(position);
+                viewHolder.imgBtdeslike.setVisibility(View.INVISIBLE);
+                viewHolder.imgBtLike.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -118,12 +141,12 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
                 if(dias == 0){
                     if(horas < 24){
                         if(minutos < 1){
-                            return hour + minutos2 + seg ;
+                            return seg;
                         }else{
-                            return hour + minutos2 + seg;
+                            return seg;
                         }
                     }else{
-                        return hour + minutos2 + seg ;
+                        return  seg ;
                     }
                 }else{
                     return d;
@@ -135,14 +158,61 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
             return a + m + d;
         }
     }
-
+    private void likePubWebService(int position){
+        String url = "http://10.0.2.2:5000/api/Publicacoes/like/" + codPub;
+        RequestQueue solicitacao = Volley.newRequestQueue(context);
+        JsonArrayRequest envio = new JsonArrayRequest(
+                Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Publi aux = listaPubli.get(position);
+                        aux.setLike_pub(aux.getLike_pub() + 1);
+                        listaPubli.remove(position);
+                        listaPubli.add(position, aux);
+                        notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(context, "Erro ao conectar", Toast.LENGTH_SHORT).show();
+            }
+        });
+        solicitacao.add(envio);
+    }
+    private void deslikePubWebService(int position){
+        String url = "http://10.0.2.2:5000/api/Publicacoes/deslike/" + codPub;
+        RequestQueue solicitacao = Volley.newRequestQueue(context);
+        JsonArrayRequest envio = new JsonArrayRequest(
+                Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Publi aux = listaPubli.get(position);
+                        aux.setLike_pub(aux.getLike_pub() - 1);
+                        listaPubli.remove(position);
+                        listaPubli.add(position, aux);
+                        notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(context, "Erro ao conectar", Toast.LENGTH_SHORT).show();
+            }
+        });
+        solicitacao.add(envio);
+    }
 }
 
 class PublicacoesViewHolder extends RecyclerView.ViewHolder{
 
-    ImageView imgPostagem, imgFotoPerfil;
+    ImageView imgPostagem, imgFotoPerfil, imgBtLike;
     TextView descPostagem, txtData, txtNomePerfil, txtCurtida, categoriaPub;
-    ImageButton imgBtRemover, imgBtlike;
+    ImageButton imgBtdeslike;
 
     public PublicacoesViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -152,10 +222,9 @@ class PublicacoesViewHolder extends RecyclerView.ViewHolder{
         txtData = itemView.findViewById(R.id.custoProj);
         txtCurtida = itemView.findViewById(R.id.txtCurtida);
         imgPostagem = itemView.findViewById(R.id.imgProj);
-        imgBtRemover = itemView.findViewById(R.id.like2);
-        imgBtlike = itemView.findViewById(R.id.like1);
+        imgBtdeslike = itemView.findViewById(R.id.likeCheio);
+        imgBtLike = itemView.findViewById(R.id.likeVazio);
         categoriaPub = itemView.findViewById(R.id.categoriaPub);
-
     }
 }
 

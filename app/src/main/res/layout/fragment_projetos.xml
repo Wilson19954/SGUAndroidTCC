@@ -5,7 +5,7 @@
     android:id="@+id/layoutProj"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProjetosFragment"
+    tools:context=".fragments.ProjetosFragment"
     android:background="#251F47"
     >
 

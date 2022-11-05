@@ -1,10 +1,8 @@
-package com.example.sgu;
+package com.example.sgu.classes;
 
 public class Publi {
 
-    public String getImg_pub() {
-        return img_pub;
-    }
+    public String getImg_pub() { return img_pub; }
 
     public void setImg_pub(String img_pub) {
         this.img_pub = img_pub;
@@ -74,14 +72,18 @@ public class Publi {
         this.tipo_user = tipo_user;
     }
 
+    public String getCod_pub() {return cod_pub;}
+
+    public void setCod_pub(String cod_pub) {this.cod_pub = cod_pub;}
+
     private String img_pub, desc_pub;
     private int like_pub;
     private String tag_pub;
     private long data_pub;
-    private String nome_user, doc_user, img_user, tipo_user;
+    private String nome_user, doc_user, img_user, tipo_user, cod_pub;
 
 
-    public Publi(String img_pub, String desc_pub, int like_pub, String tag_pub, long data_pub, String nome_user, String doc_user, String img_user, String tipo_user) {
+    public Publi(String img_pub, String desc_pub, int like_pub, String tag_pub, long data_pub, String nome_user, String doc_user, String img_user, String tipo_user, String cod_pub) {
         this.img_pub = img_pub;
         this.desc_pub = desc_pub;
         this.like_pub = like_pub;
@@ -91,5 +93,6 @@ public class Publi {
         this.doc_user = doc_user;
         this.img_user = img_user;
         this.tipo_user = tipo_user;
+        this.cod_pub = cod_pub;
     }
 }

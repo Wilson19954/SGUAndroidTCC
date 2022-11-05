@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -48,17 +49,18 @@ public class TelaLogin extends AppCompatActivity {
 
         btLogin.setOnClickListener(view -> {
             salvarDados();
-            startActivity(new Intent(TelaLogin.this, MainActivity.class));
-            //enviarDadosWebservice();
+            //startActivity(new Intent(TelaLogin.this, MainActivity.class));
+            enviarDadosWebservice();
         });
     }
-
-    /*private void enviarDadosWebservice(){
-        String url = "http://10.0.2.2:5000/api/Usuario/login";
+    private void enviarDadosWebservice(){
+        String url = "http://10.0.2.2:5000/api/Usuario/login/";
         try {
             JSONObject dadosEnvio = new JSONObject();
+
             dadosEnvio.put("doc", edDocLogin.getText().toString());
             dadosEnvio.put("senha", edSenhaLogin.getText().toString());
+
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                     url, dadosEnvio,
                     new Response.Listener<JSONObject>() {
@@ -67,14 +69,13 @@ public class TelaLogin extends AppCompatActivity {
                             try {
                                 if(response.getInt("status") == 200){
                                     Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoAcessoOk, Snackbar.LENGTH_SHORT).show();
-                                    Intent it = new Intent(TelaLogin.this, MainActivity.class);
-                                    startActivity(it);
+                                    startActivity(new Intent(TelaLogin.this, MainActivity.class));
                                 }else{
-                                    Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoAcessoErro, Snackbar.LENGTH_SHORT).show();
+                                    Snackbar.make(findViewById(R.id.telaLogin),R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoAcessoErro, Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -82,7 +83,7 @@ public class TelaLogin extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(findViewById(R.id.telaLogin), "CPF ou senha inválidos", Snackbar.LENGTH_SHORT).show();
                         }
                     }
             );
@@ -91,7 +92,7 @@ public class TelaLogin extends AppCompatActivity {
         }catch (Exception exc){
             exc.printStackTrace();
         }
-    }*/
+    }
 
     private void salvarDados(){
         String document = edDocLogin.getText().toString();

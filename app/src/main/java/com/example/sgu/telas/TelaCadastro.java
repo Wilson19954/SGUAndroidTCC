@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -157,7 +158,7 @@ public class TelaCadastro extends AppCompatActivity {
                                     Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoOk, Snackbar.LENGTH_SHORT).show();
                                     limparCampos();
                                     imgFoto.setImageBitmap(null);
-                                    imgFoto.setImageResource(R.drawable.ic_enviar);
+                                    //imgFoto.setImageResource(R.drawable.ic_enviar);
                                 }else{
                                     Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }

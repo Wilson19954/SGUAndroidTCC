@@ -5,7 +5,7 @@
     android:id="@+id/telaPubPerfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PublicacoesFragment"
+    tools:context=".fragments.PublicacoesFragment"
     android:background="#251F47"
     >
 

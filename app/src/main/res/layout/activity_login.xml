@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#251F47"
     app:layout_constraintCircleRadius="20dp"
-    tools:context=".TelaLogin">
+    tools:context=".telas.TelaLogin">
 
     <TextView
         android:id="@+id/textView"

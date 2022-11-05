@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,19 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -30,6 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
+import com.example.sgu.adapter.PublicacoesAdapter;
+import com.example.sgu.classes.Publi;
+import com.example.sgu.classes.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,12 +47,34 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipe;
     RecyclerView recyclerView;
     TextView nomePerfil, tipoUser;
-    ImageButton like;
     String document;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        enviarDadosPubWebservice();
+        dadosSessaoWebservice();
     }
 
     @SuppressLint("MissingInflatedId")
@@ -90,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         swipe = findViewById(R.id.swipe);
 
-        enviarDadosPubWebservice();
-        dadosSessaoWebservice();
-
         imgLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, TelaPerfilP.class));
             }
         });
-
         iconPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,17 +134,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                swipe.setRefreshing(false);
                RearrangeItems();
             }
-        });
-    }
+        });*/
 
+    }
     private void enviarDadosPubWebservice(){
-        String url = "http://10.0.2.2:5000/api/Publicacoes";
+        String url = "http://10.0.2.2:5000/api/Publicacoes/";
         RequestQueue solicitacao = Volley.newRequestQueue(this);
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -158,7 +171,8 @@ public class MainActivity extends AppCompatActivity {
                                         object.getString("nome_user"),
                                         object.getString("doc_user"),
                                         object.getString("img_user"),
-                                        object.getString("tipo_user"));
+                                        object.getString("tipo_user"),
+                                        object.getString("cod_pub"));
                                 listaPubli.add(publi);
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -13,25 +13,25 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.SGU">
         <activity
-            android:name=".TelaAdicionarPublicacao"
+            android:name=".telas.TelaAdicionarPublicacao"
             android:exported="false" />
         <activity
-            android:name=".TelaPerfilP"
+            android:name=".telas.TelaPerfilP"
             android:exported="true" />
         <activity
-            android:name=".Sobre"
+            android:name=".telas.Sobre"
             android:exported="true" />
         <activity
-            android:name=".TelaAdicionarProjeto"
+            android:name=".telas.TelaAdicionarProjeto"
             android:exported="true" />
         <activity
-            android:name=".TelaCadastro"
+            android:name=".telas.TelaCadastro"
             android:exported="true" />
         <activity
-            android:name=".TelaLogin"
+            android:name=".telas.TelaLogin"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".telas.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
+import com.example.sgu.telas.TelaAdicionarProjeto;
+import com.example.sgu.adapter.ProjetosAdapter;
+import com.example.sgu.classes.Projetos;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,7 +112,7 @@ public class ProjetosFragment extends Fragment {
 
         recuperarDados();
 
-        String url = "http://10.0.2.2:5000/api/Projetos/search/"+document;
+        String url = "http://10.0.2.2:5000/api/Projetos/search/" + document;
 
         RequestQueue solicitacao = Volley.newRequestQueue(getContext());
         JsonArrayRequest envio = new JsonArrayRequest(
@@ -142,13 +145,14 @@ public class ProjetosFragment extends Fragment {
                             }
                             ProjetosAdapter adapter = new ProjetosAdapter(listaProjetos, getContext());
                             recyclerView.setAdapter(adapter);
+
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Erro ao conectar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Sem Projetos Cadastrados", Toast.LENGTH_SHORT).show();
             }
         }
         );

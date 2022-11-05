@@ -1,8 +1,10 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.sgu.R;
 
 public class Sobre extends AppCompatActivity {
 

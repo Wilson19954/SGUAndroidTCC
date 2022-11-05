@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/telaProj"
     android:layout_width="match_parent"
-    android:layout_height="470dp"
+    android:layout_height="490dp"
     android:orientation="vertical"
     android:background="#251F47"
     >
 
     <androidx.cardview.widget.CardView
-        android:layout_width="411dp"
-        android:layout_height="441dp"
+        android:layout_width="410dp"
+        android:layout_height="465dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="#251F47"
@@ -77,49 +77,60 @@
                 android:text="Descrição da publicação"
                 android:textColor="#FFFFFF" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="34dp"
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/like1"
-                    android:layout_width="40dp"
-                    android:layout_height="37dp"
+                    android:id="@+id/likeCheio"
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
                     android:backgroundTint="#251F47"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_likes" />
+
+                <ImageView
+                    android:id="@+id/likeVazio"
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_like" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Curtidas da pub"
+                    android:layout_marginLeft="7dp"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/txtCurtida"
-                    android:layout_width="10dp"
-                    android:layout_height="34dp"
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
                     android:text="0"
                     android:textColor="@color/white" />
-
-                <ImageButton
-                    android:id="@+id/like2"
-                    android:layout_width="40dp"
-                    android:layout_height="37dp"
-                    android:backgroundTint="#251F47"
-                    app:srcCompat="@drawable/ic_like" />
-
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="40dp"
-                    android:layout_height="37dp"
-                    android:backgroundTint="#251F47"
-                    app:srcCompat="@drawable/ic_enviar" />
-
-                <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="40dp"
-                    android:layout_height="37dp"
-                    android:backgroundTint="#251F47"
-                    app:srcCompat="@drawable/ic_commentt" />
-
-
             </LinearLayout>
+
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

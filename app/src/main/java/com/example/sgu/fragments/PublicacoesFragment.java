@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
+import com.example.sgu.adapter.PublicacoesAdapter;
+import com.example.sgu.classes.Publi;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,7 +88,8 @@ public class PublicacoesFragment extends Fragment {
                                         object.getString("nome_user"),
                                         object.getString("doc_user"),
                                         object.getString("img_user"),
-                                        object.getString("tipo_user"));
+                                        object.getString("tipo_user"),
+                                        object.getString("cod_pub"));
                                 listaPubli.add(publi);
                             } catch (JSONException e) {
                                 e.printStackTrace();

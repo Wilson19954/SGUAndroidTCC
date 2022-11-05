@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.classes;
 
 public class Publicacoes {
 

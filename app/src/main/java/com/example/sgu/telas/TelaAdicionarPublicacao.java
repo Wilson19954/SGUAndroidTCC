@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -7,20 +7,18 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,16 +26,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class TelaAdicionarPublicacao extends AppCompatActivity {
 
@@ -45,8 +40,9 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
     EditText edDesc, edDoc;
     Spinner spnCategoria;
     Bitmap fotoEscolhida;
-    ImageButton btEscolherFoto;
+    ImageView btEscolherFoto;
     Button btPublicar;
+    String document;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +51,6 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
 
         imgPub = findViewById(R.id.imgPublicacoes);
         edDesc = findViewById(R.id.edDesc);
-        edDoc = findViewById(R.id.edDoc);
         spnCategoria = findViewById(R.id.spnCategoria);
         btEscolherFoto = findViewById(R.id.btEscolherFoto);
         btPublicar = findViewById(R.id.btPublicar);
@@ -66,21 +61,28 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         });
 
         btPublicar.setOnClickListener(view -> {
-            if(camposVazios()){
+            enviarDadosWebservice();
+            /*if(camposVazios()){
                 Toast.makeText(TelaAdicionarPublicacao.this, "Verifique se ficou algum campo vazio", Toast.LENGTH_SHORT).show();
             }else{
                     enviarDadosWebservice();
-            }
+            }*/
         });
     }
 
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
+    }
+
     private void enviarDadosWebservice(){
+        recuperarDados();
         String url = "http://10.0.2.2:5000/api/Publicacoes";
 
         try {
             JSONObject dadosEnvio = new JSONObject();
             dadosEnvio.put("desc", edDesc.getText().toString());
-            dadosEnvio.put("doc_user", edDoc.getText().toString());
+            dadosEnvio.put("doc_user", document);
             dadosEnvio.put("tag",spnCategoria.getSelectedItem().toString());
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -100,7 +102,8 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
                                     Snackbar.make(findViewById(R.id.telaPublicacoes), R.string.avisoOk, Snackbar.LENGTH_SHORT).show();
                                     limparCampos();
                                     imgPub.setImageBitmap(null);
-                                    imgPub.setImageResource(R.drawable.ic_enviar);
+                                    //imgPub.setImageResource(R.drawable.ic_enviar);
+                                    startActivity(new Intent(TelaAdicionarPublicacao.this, MainActivity.class));
                                 }else{
                                     Snackbar.make(findViewById(R.id.telaPublicacoes), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }
@@ -126,8 +129,6 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         }
     }
 
-
-
     ActivityResultLauncher<Intent> resultadoCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -136,6 +137,7 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
                 fotoEscolhida = (Bitmap) extras.get("data");
                 imgPub.setImageBitmap(fotoEscolhida);
                 imgPub.setRotation(90);
+                imgPub.setVisibility(View.VISIBLE);
             }
         }
     });

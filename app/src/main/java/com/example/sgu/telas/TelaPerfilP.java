@@ -1,11 +1,8 @@
-package com.example.sgu;
-
-import static android.widget.TabHost.TabSpec.*;
+package com.example.sgu.telas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,8 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,16 +20,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
+import com.example.sgu.adapter.VPAdapter;
+import com.example.sgu.classes.Usuario;
+import com.example.sgu.fragments.ProjetosFragment;
+import com.example.sgu.fragments.PublicacoesFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TelaPerfilP extends AppCompatActivity {
@@ -102,7 +99,7 @@ public class TelaPerfilP extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        vpAdapter.addFragment(new PublicacoesFragment(), "Pubs");
+        vpAdapter.addFragment(new PublicacoesFragment(), "Publicações");
         vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
 
         viewPager.setAdapter(vpAdapter);
