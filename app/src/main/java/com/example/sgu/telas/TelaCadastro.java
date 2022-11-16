@@ -29,6 +29,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.santalu.maskara.widget.MaskEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +40,11 @@ public class TelaCadastro extends AppCompatActivity {
 
     Button btCadastrar;
     ImageView imgcamera, imggaleria, imgFoto;
-    EditText  ednome, edendereco, edemail, eddocumento, edsenha, edbio, edtelefone;
+    MaskEditText eddocumento, edtelefone;
+    EditText  ednome, edendereco, edemail, edsenha, edbio;
     Spinner edtipouser;
     Bitmap fotoEscolhida;
+
     private AlertDialog alert;
 
     @Override
@@ -63,10 +66,15 @@ public class TelaCadastro extends AppCompatActivity {
         imgFoto = findViewById(R.id.imgFoto);
 
         btCadastrar.setOnClickListener(view -> {
+            Boolean preencherdoc = eddocumento.isDone();
+            Boolean preenchertel = edtelefone.isDone();
+
             if(camposVazios()){
-                Toast.makeText(TelaCadastro.this, "Verifique se ficou algum campo vazio", Toast.LENGTH_SHORT).show();
-            }else{
-               enviarDadosWebservice();
+                Toast.makeText(TelaCadastro.this, "Verifique campos vazios", Toast.LENGTH_SHORT).show();
+            }else if (!preencherdoc || !preenchertel){
+                Toast.makeText(this, "Complete todos os campos", Toast.LENGTH_SHORT).show();
+            } else {
+                enviarDadosWebservice();
             }
         });
 
@@ -74,12 +82,12 @@ public class TelaCadastro extends AppCompatActivity {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             resultadoCamera.launch(cameraIntent);
         });
+
         imggaleria.setOnClickListener(view -> {
            Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
            galeriaIntent.setType("image/*");
             resultadoCamera.launch(galeriaIntent);
         });
-
     }
 
 

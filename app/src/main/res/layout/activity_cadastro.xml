@@ -147,7 +147,7 @@
                 android:background="@drawable/rounded_corner"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -157,7 +157,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="5dp"
-                android:text="CPF/CNPJ"
+                android:text="CPF"
                 android:textColor="#FFFFFF" />
 
             <com.santalu.maskara.widget.MaskEditText

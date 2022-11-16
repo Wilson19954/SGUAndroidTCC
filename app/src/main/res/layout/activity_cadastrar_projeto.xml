@@ -102,8 +102,15 @@
             android:layout_width="102dp"
             android:layout_height="68dp"
             android:layout_marginLeft="150dp"
-            app:srcCompat="@android:drawable/ic_menu_gallery"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listaFotos"
+            android:layout_width="match_parent"
+            android:layout_height="51dp" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"

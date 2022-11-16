@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,16 @@ public class TelaLogin extends AppCompatActivity {
     TextView criarconta;
     EditText edDocLogin;
     EditText edSenhaLogin;
+    String document;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recuperarDados();
+        if(!document.isEmpty()){
+            startActivity(new Intent(TelaLogin.this, MainActivity.class));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +60,10 @@ public class TelaLogin extends AppCompatActivity {
 
         btLogin.setOnClickListener(view -> {
             salvarDados();
-            //startActivity(new Intent(TelaLogin.this, MainActivity.class));
             enviarDadosWebservice();
         });
     }
+
     private void enviarDadosWebservice(){
         String url = "http://10.0.2.2:5000/api/Usuario/login/";
         try {
@@ -100,5 +111,9 @@ public class TelaLogin extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("doc", document);
         editor.commit();
+    }
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
     }
 }

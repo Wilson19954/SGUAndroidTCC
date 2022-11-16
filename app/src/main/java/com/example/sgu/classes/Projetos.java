@@ -2,10 +2,10 @@ package com.example.sgu.classes;
 
 public class Projetos {
 
-    private String cod, desc, custo, tag, nome, doc_user;
+    private String cod, desc, custo, tag, nome, doc_user, img;
     long data;
 
-    public Projetos( String cod, String desc, String custo, String tag, String nome, String doc_user, long data) {
+    public Projetos( String cod, String desc, String custo, String tag, String nome, String doc_user, long data, String img) {
         this.cod = cod;
         this.desc = desc;
         this.custo = custo;
@@ -13,8 +13,12 @@ public class Projetos {
         this.nome = nome;
         this.doc_user = doc_user;
         this.data = data;
+        this.img = img;
     }
 
+    public String getImg() {return img;}
+
+    public void setImg(String img) {this.img = img;}
 
     public String getDesc() {return desc;}
 

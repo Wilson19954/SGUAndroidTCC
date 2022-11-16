@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView adicionarPub, iconPerfil, imgLog;
     SwipeRefreshLayout swipe;
     RecyclerView recyclerView;
-    TextView nomePerfil, tipoUser;
+    TextView nomePerfil, tipoUser, btsair;
     String document;
 
     @Override
@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        enviarDadosPubWebservice();
-        dadosSessaoWebservice();
     }
 
     @SuppressLint("MissingInflatedId")
@@ -82,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        enviarDadosPubWebservice();
+        dadosSessaoWebservice();
 
         SearchView searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
@@ -106,6 +107,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         swipe = findViewById(R.id.swipe);
+        btsair = findViewById(R.id.sair);
+
+        btsair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletarSharedPreferences();
+                startActivity(new Intent(MainActivity.this, TelaLogin.class));
+            }
+        });
 
         imgLog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 lManager.scrollToPositionWithOffset(0, 0);
             }
         });
+
         nomePerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void enviarDadosPubWebservice(){
-        String url = "http://10.0.2.2:5000/api/Publicacoes/";
+        String url = "http://10.0.2.2:5000/api/Publicacoes";
         RequestQueue solicitacao = Volley.newRequestQueue(this);
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -234,6 +245,14 @@ public class MainActivity extends AppCompatActivity {
     private void recuperarDados(){
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         document = sharedPref.getString("doc","");
+    }
+
+    public void deletarSharedPreferences()
+    {
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
     }
 
     public void RearrangeItems() {

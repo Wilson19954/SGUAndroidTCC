@@ -1,5 +1,6 @@
 package com.example.sgu.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,9 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
-import com.example.sgu.telas.TelaAdicionarProjeto;
 import com.example.sgu.adapter.ProjetosAdapter;
 import com.example.sgu.classes.Projetos;
+import com.example.sgu.telas.TelaAdicionarProjeto;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,13 +41,12 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProjetosFragment#newInstance} factory method to
+ * Use the {@link ProjetosFragment2#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProjetosFragment extends Fragment {
+public class ProjetosFragment2 extends Fragment {
 
-
-    String document;
+    String documentPubli;
     ImageView adicionarProjetos;
     RecyclerView recyclerView;
     List<Projetos> listaProjetos = new ArrayList<>();
@@ -60,7 +60,7 @@ public class ProjetosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProjetosFragment() {
+    public ProjetosFragment2() {
         // Required empty public constructor
     }
 
@@ -70,17 +70,18 @@ public class ProjetosFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProjetosFragment.
+     * @return A new instance of fragment ProjetosFragment2.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProjetosFragment newInstance(String param1, String param2) {
-        ProjetosFragment fragment = new ProjetosFragment();
+    public static ProjetosFragment2 newInstance(String param1, String param2) {
+        ProjetosFragment2 fragment = new ProjetosFragment2();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,37 +90,31 @@ public class ProjetosFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_projetos, container, false);
+        View view = inflater.inflate(R.layout.fragment_projetos2, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adicionarProjetos = view.findViewById(R.id.adicionarProjetos);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        adicionarProjetos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TelaAdicionarProjeto.class));
-            }
-        });
         BuscarDadosWebService();
     }
 
     private void recuperarDados(){
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        document = sharedPref.getString("doc","");
+        documentPubli = sharedPref.getString("docPubli","");
     }
 
     private void BuscarDadosWebService(){
         recuperarDados();
-        String url = "http://10.0.2.2:5000/api/Projetos/search/" + document;
+        String url = "http://10.0.2.2:5000/api/Projetos/search/" + documentPubli;
         RequestQueue solicitacao = Volley.newRequestQueue(getContext());
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,

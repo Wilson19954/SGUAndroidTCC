@@ -22,9 +22,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
 import com.example.sgu.adapter.VPAdapter;
+import com.example.sgu.adapter.VPAdapter2;
 import com.example.sgu.classes.Usuario;
 import com.example.sgu.fragments.ProjetosFragment;
+import com.example.sgu.fragments.ProjetosFragment2;
 import com.example.sgu.fragments.PublicacoesFragment;
+import com.example.sgu.fragments.PublicacoesFragments2;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
@@ -34,7 +37,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TelaPerfilP extends AppCompatActivity {
+public class TelaPerfilV extends AppCompatActivity {
+
     List<Usuario> listaUsuario = new ArrayList<>();
 
     private TabLayout tabLayout;
@@ -43,12 +47,12 @@ public class TelaPerfilP extends AppCompatActivity {
     TextView nomePerfil, descPerfil,endPerfil, telPerfil, emPerfil;
     ImageView imgPerfil;
 
-    String document;
+    String documentPubli;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_perfil_p);
+        setContentView(R.layout.activity_tela_perfil_v);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -58,9 +62,26 @@ public class TelaPerfilP extends AppCompatActivity {
         endPerfil = findViewById(R.id.enderecoPerfil);
         telPerfil = findViewById(R.id.telefonePerfil);
         emPerfil = findViewById(R.id.emailPerfil);
-        recuperarDados();
+        tabLayout.setupWithViewPager(viewPager);
 
-        String url = "http://10.0.2.2:5000/api/Usuario/buscar/" + document;
+
+        BuscarDadosWebService();
+        VPAdapter2 vpAdapter2 = new VPAdapter2(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        vpAdapter2.addFragment(new PublicacoesFragments2(), "Publicações");
+        vpAdapter2.addFragment(new ProjetosFragment2(), "Projetos");
+
+        viewPager.setAdapter(vpAdapter2);
+
+    }
+
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        documentPubli = sharedPref.getString("docPubli","");
+    }
+    private void BuscarDadosWebService(){
+        recuperarDados();
+        String url = "http://10.0.2.2:5000/api/Usuario/buscar/" + documentPubli;
         RequestQueue solicitacao = Volley.newRequestQueue(this);
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -80,7 +101,7 @@ public class TelaPerfilP extends AppCompatActivity {
                                         object.getString("img"),
                                         object.getString("tipo"),
                                         object.getString("senha"));
-                                        listaUsuario.add(u);
+                                listaUsuario.add(u);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -98,22 +119,9 @@ public class TelaPerfilP extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(TelaPerfilP.this, "Erro ao conectar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TelaPerfilV.this, "Erro ao conectar", Toast.LENGTH_SHORT).show();
             }
         });
         solicitacao.add(envio);
-        tabLayout.setupWithViewPager(viewPager);
-
-        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        vpAdapter.addFragment(new PublicacoesFragment(), "Publicações");
-        vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
-
-        viewPager.setAdapter(vpAdapter);
-
     }
-        private void recuperarDados(){
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        document = sharedPref.getString("doc","");
-    }
-
 }

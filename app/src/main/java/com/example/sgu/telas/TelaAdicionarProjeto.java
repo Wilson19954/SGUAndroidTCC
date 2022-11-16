@@ -1,14 +1,26 @@
 package com.example.sgu.telas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,33 +29,86 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
+import com.example.sgu.adapter.FotosAdapter;
+import com.example.sgu.adapter.ProjetosAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelaAdicionarProjeto extends AppCompatActivity {
 
     EditText edNomeProjeto, edCustoProjeto, edDescricaoProjeto, edDocUser, edCod;
     Spinner spnCategoriaProjeto;
     Button btCadastrarProjeto;
+    Bitmap fotoEscolhida;
     String document;
+    ImageView imgCam, imgProjeto;
+    List<Bitmap> listaFotos = new ArrayList<Bitmap>();
+
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_projeto);
 
+
+        recyclerView = findViewById(R.id.listaFotos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
+        layoutManager1.setOrientation(RecyclerView.HORIZONTAL);
+
+        FotosAdapter adapter = new FotosAdapter(listaFotos, TelaAdicionarProjeto.this);
+        recyclerView.setAdapter(adapter);
+
         edNomeProjeto = findViewById(R.id.edNomeProj);
         edCustoProjeto = findViewById(R.id.edCustoProj);
         edDescricaoProjeto = findViewById(R.id.edDescProj);
         spnCategoriaProjeto = findViewById(R.id.spnCatProj);
         btCadastrarProjeto = findViewById(R.id.btCadProj);
+        imgCam = findViewById(R.id.imgCam);
+        imgProjeto = findViewById(R.id.imgProjeto);
+
+        imgCam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                resultadoCamera.launch(cameraIntent);
+            }
+        });
+
         btCadastrarProjeto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {enviarDadosWebservice();}
+            public void onClick(View v) {
+                enviarDadosWebservice();
+            }
         });
+
     }
+
+    ActivityResultLauncher<Intent> resultadoCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == RESULT_OK){
+                Bundle extras = result.getData().getExtras();
+                fotoEscolhida = (Bitmap) extras.get("data");
+
+                imgProjeto.setImageBitmap(fotoEscolhida);
+                imgProjeto.setRotation(90);
+                imgProjeto.setVisibility(View.VISIBLE);
+
+                listaFotos.add(fotoEscolhida);
+
+            }
+        }
+    });
 
     private void recuperarDados(){
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -62,6 +127,14 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
             dadosEnvio.put("tag",spnCategoriaProjeto.getSelectedItem().toString());
             dadosEnvio.put("nome", edNomeProjeto.getText().toString());
             dadosEnvio.put("doc_user", document);
+
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] imagemEmByte = stream.toByteArray();
+            String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+            dadosEnvio.put("img", imagemEmString);
+
 
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                     url, dadosEnvio,

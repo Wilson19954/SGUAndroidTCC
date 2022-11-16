@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -33,14 +34,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class TelaAdicionarPublicacao extends AppCompatActivity {
 
     ImageView imgPub;
     EditText edDesc, edDoc;
     Spinner spnCategoria;
-    Bitmap fotoEscolhida;
-    ImageView btEscolherFoto;
+    Bitmap fotoEscolhida, fotoBuscada;
+    ImageView btEscolherFoto, btGaleria;
     Button btPublicar;
     String document;
 
@@ -54,6 +56,7 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         spnCategoria = findViewById(R.id.spnCategoria);
         btEscolherFoto = findViewById(R.id.btEscolherFoto);
         btPublicar = findViewById(R.id.btPublicar);
+        btGaleria = findViewById(R.id.btGaleria);
 
         btEscolherFoto.setOnClickListener(view -> {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -68,6 +71,13 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
                     enviarDadosWebservice();
             }*/
         });
+
+        btGaleria.setOnClickListener(view -> {
+            Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            galeriaIntent.setType("image/*");
+            startActivityForResult(galeriaIntent, 1);
+        });
+
     }
 
     private void recuperarDados(){
@@ -86,7 +96,8 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
             dadosEnvio.put("tag",spnCategoria.getSelectedItem().toString());
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            //fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            fotoBuscada.compress(Bitmap.CompressFormat.PNG, 70, stream);
             byte[] imagemEmByte = stream.toByteArray();
             String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
             dadosEnvio.put("img", imagemEmString);
@@ -141,6 +152,24 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
             }
         }
     });
+
+        public void onActivityResult(int requestCode, int resultCode, Intent dados) {
+            super.onActivityResult(requestCode, resultCode, dados);
+            if (requestCode == 1) {
+                if (resultCode == RESULT_OK) {
+                    Uri imageuri = dados.getData();
+                    fotoBuscada = null;
+                    try {
+                        fotoBuscada = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageuri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    imgPub.setImageBitmap(fotoBuscada);
+                    imgPub.setRotation(90);
+                    imgPub.setVisibility(View.VISIBLE);
+                }
+            }
+        }
 
     private boolean camposVazios(){
         ConstraintLayout telaComponentes = findViewById(R.id.telaPublicacoes);

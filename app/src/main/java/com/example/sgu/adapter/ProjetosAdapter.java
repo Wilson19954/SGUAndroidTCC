@@ -2,7 +2,10 @@ package com.example.sgu.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +53,9 @@ public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosViewHolder> {
         viewHolder.descProj.setText(listaProjetos.get(position).getDesc());
         viewHolder.custoProj.setText(listaProjetos.get(position).getCusto());
 
-        /*byte[] converteBase64 = Base64.decode(listaPublicacoes.get(position).getImg(), Base64.DEFAULT);
+        byte[] converteBase64 = Base64.decode(listaProjetos.get(position).getImg(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
-        viewHolder.imgPostagem.setImageBitmap(bitmap);*/
+        viewHolder.imageProj.setImageBitmap(bitmap);
 
     }
 

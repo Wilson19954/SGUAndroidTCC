@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#251F47"
     android:orientation="vertical"
-    tools:context=".telas.TelaPerfilP">
+    tools:context=".telas.TelaPerfilV">
 
     <androidx.cardview.widget.CardView
         android:layout_width="411dp"
