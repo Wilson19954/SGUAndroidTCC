@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
 import com.example.sgu.adapter.VPAdapter;
 import com.example.sgu.classes.Usuario;
+import com.example.sgu.fragments.GaleriaFragment;
 import com.example.sgu.fragments.ProjetosFragment;
 import com.example.sgu.fragments.PublicacoesFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -107,6 +108,7 @@ public class TelaPerfilP extends AppCompatActivity {
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         vpAdapter.addFragment(new PublicacoesFragment(), "Publicações");
         vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
+        vpAdapter.addFragment(new GaleriaFragment(), "Galeria");
 
         viewPager.setAdapter(vpAdapter);
 

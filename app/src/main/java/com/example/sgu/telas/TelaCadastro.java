@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -35,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class TelaCadastro extends AppCompatActivity {
 
@@ -43,7 +45,7 @@ public class TelaCadastro extends AppCompatActivity {
     MaskEditText eddocumento, edtelefone;
     EditText  ednome, edendereco, edemail, edsenha, edbio;
     Spinner edtipouser;
-    Bitmap fotoEscolhida;
+    Bitmap fotoEscolhida, fotoBuscada;
 
     private AlertDialog alert;
 
@@ -84,9 +86,9 @@ public class TelaCadastro extends AppCompatActivity {
         });
 
         imggaleria.setOnClickListener(view -> {
-           Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
-           galeriaIntent.setType("image/*");
-            resultadoCamera.launch(galeriaIntent);
+            Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            galeriaIntent.setType("image/*");
+            startActivityForResult(galeriaIntent, 1);
         });
     }
 
@@ -151,7 +153,8 @@ public class TelaCadastro extends AppCompatActivity {
             dadosEnvio.put("tipo",edtipouser.getSelectedItem().toString());
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            //fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] imagemEmByte = stream.toByteArray();
             String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
             dadosEnvio.put("img", imagemEmString);
@@ -202,6 +205,25 @@ public class TelaCadastro extends AppCompatActivity {
             }
         }
     });
+
+    public void onActivityResult(int requestCode, int resultCode, Intent dados) {
+        super.onActivityResult(requestCode, resultCode, dados);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Uri imageuri = dados.getData();
+                fotoBuscada = null;
+                try {
+                    fotoBuscada = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageuri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imgFoto.setImageBitmap(fotoBuscada);
+                imgFoto.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+
     private boolean camposVazios(){
         ConstraintLayout telaComponentes = findViewById(R.id.telaCadastro);
         for (int i = 0; i < telaComponentes.getChildCount(); i++) {

@@ -9,8 +9,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
-        android:layout_width="409dp"
-        android:layout_height="688dp"
+        android:layout_width="406dp"
+        android:layout_height="618dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +32,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="413dp"
-        android:layout_height="120dp"
+        android:layout_width="414dp"
+        android:layout_height="111dp"
         android:background="#251F47"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"

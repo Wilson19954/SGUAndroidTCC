@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/telaProj"
     android:layout_width="match_parent"
-    android:layout_height="490dp"
-    android:orientation="vertical"
+    android:layout_height="740dp"
     android:background="#251F47"
-    >
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="410dp"
-        android:layout_height="465dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="700dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="#251F47"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageProj"
                     android:layout_width="47dp"
                     android:layout_height="match_parent"
@@ -58,7 +58,7 @@
             <ImageView
                 android:id="@+id/imgProj"
                 android:layout_width="match_parent"
-                android:layout_height="265dp"
+                android:layout_height="520dp"
                 app:srcCompat="@drawable/postagemexemplo" />
 
             <TextView
@@ -115,16 +115,16 @@
                     android:id="@+id/textView28"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Curtidas da pub"
                     android:layout_marginLeft="7dp"
+                    android:text="Curtidas da pub"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/txtCurtida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:text="0"
                     android:textColor="@color/white" />
             </LinearLayout>

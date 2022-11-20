@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @SuppressLint("MissingInflatedId")
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 deletarSharedPreferences();
                 startActivity(new Intent(MainActivity.this, TelaLogin.class));
+                MainActivity.this.finish();
             }
         });
 
@@ -145,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                swipe.setRefreshing(false);
                RearrangeItems();
             }
-        });*/
+        });
 
     }
     private void enviarDadosPubWebservice(){
@@ -252,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
     public void RearrangeItems() {

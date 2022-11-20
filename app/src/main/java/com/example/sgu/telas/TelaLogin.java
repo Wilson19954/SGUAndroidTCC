@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
+import com.example.sgu.classes.SplashScreen;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -30,21 +31,44 @@ public class TelaLogin extends AppCompatActivity {
     TextView criarconta;
     EditText edDocLogin;
     EditText edSenhaLogin;
-    String document;
+    String doc;
+
 
     @Override
     protected void onStart() {
         super.onStart();
         recuperarDados();
-        if(!document.isEmpty()){
-            startActivity(new Intent(TelaLogin.this, MainActivity.class));
+        if(!doc.isEmpty()){
+            startActivity(new Intent(TelaLogin.this, SplashScreen.class));
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        recuperarDados();
 
         criarconta = findViewById(R.id.txtCriarconta);
         edDocLogin = findViewById(R.id.edDocLogin);
@@ -58,10 +82,14 @@ public class TelaLogin extends AppCompatActivity {
             }
         });
 
-        btLogin.setOnClickListener(view -> {
-            salvarDados();
-            enviarDadosWebservice();
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                salvarDados();
+                enviarDadosWebservice();
+            }
         });
+
     }
 
     private void enviarDadosWebservice(){
@@ -80,7 +108,7 @@ public class TelaLogin extends AppCompatActivity {
                             try {
                                 if(response.getInt("status") == 200){
                                     Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoAcessoOk, Snackbar.LENGTH_SHORT).show();
-                                    startActivity(new Intent(TelaLogin.this, MainActivity.class));
+                                    startActivity(new Intent(TelaLogin.this, SplashScreen.class));
                                 }else{
                                     Snackbar.make(findViewById(R.id.telaLogin),R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }
@@ -106,14 +134,14 @@ public class TelaLogin extends AppCompatActivity {
     }
 
     private void salvarDados(){
-        String document = edDocLogin.getText().toString();
+        String doc = edDocLogin.getText().toString();
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("doc", document);
-        editor.commit();
+        editor.putString("doc", doc);
+        editor.apply();
     }
     private void recuperarDados(){
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        document = sharedPref.getString("doc","");
+        doc = sharedPref.getString("doc","");
     }
 }

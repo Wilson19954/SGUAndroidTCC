@@ -8,142 +8,161 @@
     android:background="#251F47"
     tools:context=".telas.TelaAdicionarProjeto">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="207dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="30dp"
-            android:text="NOVO PROJETO"
-            android:textColor="#FFFFFF"
-            android:textSize="18dp" />
-
-        <TextView
-            android:id="@+id/txtnomeprojeto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="40dp"
-            android:text="NOME DO PROJETO"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/edNomeProj"
-            android:layout_width="280dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:id="@+id/txtcustoprojeto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="25dp"
-            android:text="CUSTO"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/edCustoProj"
-            android:layout_width="280dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:id="@+id/txtdescprojeto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="25dp"
-            android:text="DESCRIÇÃO"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/edDescProj"
-            android:layout_width="280dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
-
-        <TextView
-            android:id="@+id/txtcategoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="25dp"
-            android:text="CATEGORIA"
-            android:textColor="#FFFFFF" />
-
-        <Spinner
-            android:id="@+id/spnCatProj"
-            android:layout_width="280dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/rounded_corner"
-            android:entries="@array/spnCategoriasProj" />
-
-        <ImageView
-            android:id="@+id/imgProjeto"
-            android:layout_width="102dp"
-            android:layout_height="68dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="20dp"
-            app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listaFotos"
-            android:layout_width="match_parent"
-            android:layout_height="51dp" >
-
-        </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/textView7"
+                android:layout_width="207dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="30dp"
+                android:text="NOVO PROJETO"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txtnomeprojeto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Adicione fotos ao seu projeto:"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:text="NOME DO PROJETO"
                 android:textColor="#FFFFFF" />
 
-            <ImageView
-                android:id="@+id/imgCam"
-                android:layout_width="127dp"
+            <EditText
+                android:id="@+id/edNomeProj"
+                android:layout_width="280dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtcustoprojeto"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_menu_camera" />
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="25dp"
+                android:text="CUSTO"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edCustoProj"
+                android:layout_width="280dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtdescprojeto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="25dp"
+                android:text="DESCRIÇÃO"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edDescProj"
+                android:layout_width="280dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/rounded_corner"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/txtcategoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="25dp"
+                android:text="CATEGORIA"
+                android:textColor="#FFFFFF" />
+
+            <Spinner
+                android:id="@+id/spnCatProj"
+                android:layout_width="280dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/rounded_corner"
+                android:entries="@array/spnCategoriasProj" />
+
+            <ImageView
+                android:id="@+id/imgProjeto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="20dp"
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adicione fotos ao seu projeto:"
+                    android:textColor="#FFFFFF" />
+
+                <ImageView
+                    android:id="@+id/imgCam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                <ImageView
+                    android:id="@+id/imgGal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerImagens"
+                android:layout_width="395dp"
+                android:layout_height="68dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:scrollbars="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/btGaleria"
+                app:layout_constraintStart_toStartOf="@+id/btGaleria"
+                app:layout_constraintTop_toBottomOf="@+id/btGaleria" />
+
+            <Button
+                android:id="@+id/btCadProj"
+                android:layout_width="135dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#404E7C"
+                android:text="CADASTRAR"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="20dp" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btCadProj"
-            android:layout_width="135dp"
-            android:layout_height="56dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="50dp"
-            android:backgroundTint="#404E7C"
-            android:text="CADASTRAR"
-            android:textColor="#FFFFFF"
-            app:cornerRadius="20dp" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

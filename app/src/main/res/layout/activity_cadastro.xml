@@ -147,7 +147,7 @@
                 android:background="@drawable/rounded_corner"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -169,6 +169,7 @@
                 android:background="@drawable/rounded_corner"
                 android:ems="10"
                 android:inputType="number"
+                android:textColor="@color/black"
                 app:mask="___.___.___-__"
                 app:maskCharacter="_"
                 app:maskStyle="completable"
@@ -254,9 +255,10 @@
 
             <ImageView
                 android:id="@+id/imgFoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_enviar" />
+                android:layout_width="102dp"
+                android:layout_height="68dp"
+                app:srcCompat="@drawable/ic_enviar"
+                android:layout_marginLeft="150dp"/>
 
             <Button
                 android:id="@+id/btcriarconta"

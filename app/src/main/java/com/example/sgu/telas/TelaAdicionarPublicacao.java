@@ -153,6 +153,7 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         }
     });
 
+
         public void onActivityResult(int requestCode, int resultCode, Intent dados) {
             super.onActivityResult(requestCode, resultCode, dados);
             if (requestCode == 1) {
@@ -165,11 +166,12 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     imgPub.setImageBitmap(fotoBuscada);
-                    imgPub.setRotation(90);
                     imgPub.setVisibility(View.VISIBLE);
                 }
             }
         }
+
+
 
     private boolean camposVazios(){
         ConstraintLayout telaComponentes = findViewById(R.id.telaPublicacoes);
