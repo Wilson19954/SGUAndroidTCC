@@ -40,12 +40,12 @@ import java.io.IOException;
 
 public class TelaCadastro extends AppCompatActivity {
 
-    Button btCadastrar;
-    ImageView imgcamera, imggaleria, imgFoto;
-    MaskEditText eddocumento, edtelefone;
-    EditText  ednome, edendereco, edemail, edsenha, edbio;
-    Spinner edtipouser;
-    Bitmap fotoEscolhida, fotoBuscada;
+    private Button btCadastrar;
+    private ImageView imgcamera, imggaleria, imgFoto;
+    private MaskEditText eddocumento, edtelefone;
+    private EditText  ednome, edendereco, edemail, edsenha, edbio;
+    private Spinner edtipouser;
+    private Bitmap fotoEscolhida, fotoBuscada;
 
     private AlertDialog alert;
 
@@ -71,27 +71,30 @@ public class TelaCadastro extends AppCompatActivity {
             Boolean preencherdoc = eddocumento.isDone();
             Boolean preenchertel = edtelefone.isDone();
 
-            if(camposVazios()){
-                Toast.makeText(TelaCadastro.this, "Verifique campos vazios", Toast.LENGTH_SHORT).show();
-            }else if (!preencherdoc || !preenchertel){
-                Toast.makeText(this, "Complete todos os campos", Toast.LENGTH_SHORT).show();
+            if(isEmpty(ednome) || isEmpty(edendereco) || isEmpty(edemail) || isEmpty(edbio) || isEmpty(edsenha) ){
+                Toast.makeText(this, "Verifique campos vazios", Toast.LENGTH_SHORT).show();
             } else {
-                enviarDadosWebservice();
+                if(!preencherdoc || !preenchertel){
+                    Toast.makeText(this, "Complete todos os campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    if(fotoEscolhida == null && fotoBuscada == null){
+                        Toast.makeText(this, "Escolha uma foto para seu perfil", Toast.LENGTH_SHORT).show();
+                    } else {
+                        enviarDadosWebservice();
+                    }
+                }
             }
+
         });
 
         imgcamera.setOnClickListener(view -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            resultadoCamera.launch(cameraIntent);
+            AlertCamera("Abrir camera", "Autoriza o aplicativo acessar sua câmera?");
         });
 
         imggaleria.setOnClickListener(view -> {
-            Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
-            galeriaIntent.setType("image/*");
-            startActivityForResult(galeriaIntent, 1);
+            AlertGaleria("Abrir Galeria", "Autoriza o aplicativo acessar sua galeria de fotos?");
         });
     }
-
 
     private void AlertCamera(String titulo, String mensagem){
         AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
@@ -101,8 +104,8 @@ public class TelaCadastro extends AppCompatActivity {
         configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivity(it);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                resultadoCamera.launch(cameraIntent);
             }
         });
         configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
@@ -123,9 +126,9 @@ public class TelaCadastro extends AppCompatActivity {
         configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent it = new Intent(Intent.ACTION_GET_CONTENT);
-                it.setType("image/*");
-                startActivity(it);
+                Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galeriaIntent.setType("image/*");
+                startActivityForResult(galeriaIntent, 1);
             }
         });
         configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
@@ -152,12 +155,19 @@ public class TelaCadastro extends AppCompatActivity {
             dadosEnvio.put("doc", eddocumento.getText().toString());
             dadosEnvio.put("tipo",edtipouser.getSelectedItem().toString());
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            //fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] imagemEmByte = stream.toByteArray();
-            String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
-            dadosEnvio.put("img", imagemEmString);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                if(fotoEscolhida != null){
+                    fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] imagemEmByte = stream.toByteArray();
+                    String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+                    dadosEnvio.put("img", imagemEmString);
+                } else {
+                    fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] imagemEmByte = stream.toByteArray();
+                    String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+                    dadosEnvio.put("img", imagemEmString);
+                }
+
 
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                     url, dadosEnvio,
@@ -223,19 +233,13 @@ public class TelaCadastro extends AppCompatActivity {
         }
     }
 
-
-    private boolean camposVazios(){
-        ConstraintLayout telaComponentes = findViewById(R.id.telaCadastro);
-        for (int i = 0; i < telaComponentes.getChildCount(); i++) {
-            View view = telaComponentes.getChildAt(i);
-            if (view instanceof EditText) {
-                if(((EditText) view).getText().toString().equals("")){
-                    return true;
-                }
-            }
-        }
+    private boolean isEmpty(EditText etText) {
+        String text = etText.getText().toString().trim();
+        if (text.length()<1)
+            return true;
         return false;
     }
+
     private void limparCampos(){
         ConstraintLayout telaComponentes = findViewById(R.id.telaCadastro);
         for (int i = 0; i < telaComponentes.getChildCount(); i++) {

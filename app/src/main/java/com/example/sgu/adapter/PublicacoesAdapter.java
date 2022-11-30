@@ -31,7 +31,6 @@ import com.example.sgu.R;
 import com.example.sgu.classes.Publi;
 import com.example.sgu.classes.Publicacoes;
 import com.example.sgu.classes.Usuario;
-import com.example.sgu.telas.TelaPerfilP;
 import com.example.sgu.telas.TelaPerfilV;
 
 import org.json.JSONArray;
@@ -74,9 +73,6 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
     @Override
     public void onBindViewHolder(@NonNull PublicacoesViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-
-
-
         PublicacoesViewHolder viewHolder  = (PublicacoesViewHolder) holder;
         String like = String.valueOf(listaPubli.get(position).getLike_pub());
 
@@ -85,6 +81,7 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
         viewHolder.descPostagem.setText(listaPubli.get(position).getDesc_pub());
         viewHolder.txtData.setText(formataData(listaPubli.get(position).getData_pub()));
         viewHolder.txtCurtida.setText(like);
+        viewHolder.tipoConta.setText(listaPubli.get(position).getTipo_user());
 
         byte[] converteBase64_2 = Base64.decode(listaPubli.get(position).getImg_user(), Base64.DEFAULT);
         byte[] converteBase64 = Base64.decode(listaPubli.get(position).getImg_pub(), Base64.DEFAULT);
@@ -244,20 +241,23 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
 class PublicacoesViewHolder extends RecyclerView.ViewHolder{
 
     ImageView imgPostagem, imgFotoPerfil, imgBtLike;
-    TextView descPostagem, txtData, txtNomePerfil, txtCurtida, categoriaPub;
+    TextView descPostagem, txtData, txtNomePerfil, txtCurtida, categoriaPub, tipoConta;
     ImageButton imgBtdeslike;
 
     public PublicacoesViewHolder(@NonNull View itemView) {
         super(itemView);
-        imgFotoPerfil = itemView.findViewById(R.id.imageProj);
-        txtNomePerfil = itemView.findViewById(R.id.nomeProj);
+
+        imgFotoPerfil = itemView.findViewById(R.id.imagePub);
+        txtNomePerfil = itemView.findViewById(R.id.nomePub);
         descPostagem = itemView.findViewById(R.id.descPostagem);
-        txtData = itemView.findViewById(R.id.custoProj);
+        txtData = itemView.findViewById(R.id.dataPub);
         txtCurtida = itemView.findViewById(R.id.txtCurtida);
-        imgPostagem = itemView.findViewById(R.id.imgProj);
+        imgPostagem = itemView.findViewById(R.id.imgPub);
         imgBtdeslike = itemView.findViewById(R.id.likeCheio);
         imgBtLike = itemView.findViewById(R.id.likeVazio);
         categoriaPub = itemView.findViewById(R.id.categoriaPub);
+        tipoConta = itemView.findViewById(R.id.tipoConta);
+
     }
 }
 

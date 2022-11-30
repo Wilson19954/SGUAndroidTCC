@@ -4,25 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/telaProj"
     android:layout_width="match_parent"
-    android:layout_height="740dp"
+    android:layout_height="760dp"
     android:background="#251F47"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="410dp"
-        android:layout_height="700dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="411dp"
+        android:layout_height="727dp"
         android:backgroundTint="#251F47"
+        app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="680dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:orientation="vertical">
@@ -33,54 +32,59 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageProj"
-                    android:layout_width="47dp"
-                    android:layout_height="match_parent"
+                    android:id="@+id/imagePub"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     app:srcCompat="@drawable/logoazulclarinho" />
 
-                <TextView
-                    android:id="@+id/nomeProj"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nome"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nomePub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Nome"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tipoConta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Tipo de conta"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <TextView
-                android:id="@+id/custoProj"
-                android:layout_width="match_parent"
+                android:id="@+id/dataPub"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Agora mesmo"
                 android:textColor="#FFFFFF" />
 
             <ImageView
-                android:id="@+id/imgProj"
+                android:id="@+id/imgPub"
                 android:layout_width="match_parent"
-                android:layout_height="520dp"
+                android:layout_height="519dp"
                 app:srcCompat="@drawable/postagemexemplo" />
-
-            <TextView
-                android:id="@+id/categoriaPub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Categoria"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/descPostagem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Descrição da publicação"
-                android:textColor="#FFFFFF" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -105,32 +109,48 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_like" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/textView28"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="7dp"
-                    android:text="Curtidas da pub"
-                    android:textColor="@color/white" />
-
                 <TextView
                     android:id="@+id/txtCurtida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_weight="1"
                     android:text="0"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/likeCheio" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/categoriaPub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Categoria"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/descPostagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Descrição da publicação"
+                android:textColor="#FFFFFF" />
+
 
         </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="749dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

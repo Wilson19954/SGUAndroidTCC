@@ -12,14 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SGU"
-        android:usesCleartextTraffic="true">
-        <activity
-            android:name=".TesteSplash"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+        android:usesCleartextTraffic="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true"
+        >
         <activity
             android:name=".telas.TelaPerfilV"
             android:exported="false">
@@ -58,6 +54,10 @@
         <activity
             android:name=".telas.MainActivity"
             android:exported="true"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

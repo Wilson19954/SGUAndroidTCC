@@ -1,6 +1,7 @@
 package com.example.sgu.classes;
 
 public class Usuario {
+
     private int id;
     private String endereco, nome, desc, doc, telefone, email, img, tipo, senha;
 

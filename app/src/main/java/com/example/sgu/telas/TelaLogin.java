@@ -39,7 +39,7 @@ public class TelaLogin extends AppCompatActivity {
         super.onStart();
         recuperarDados();
         if(!doc.isEmpty()){
-            startActivity(new Intent(TelaLogin.this, SplashScreen.class));
+           enviarDadosWebservice();
         }
     }
 
@@ -85,8 +85,12 @@ public class TelaLogin extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                salvarDados();
-                enviarDadosWebservice();
+                if(isEmpty(edDocLogin) || isEmpty(edSenhaLogin)){
+                    Toast.makeText(TelaLogin.this, "Não deixe campos vazios!", Toast.LENGTH_SHORT).show();
+                } else {
+                    salvarDados();
+                    enviarDadosWebservice();
+                }
             }
         });
 
@@ -131,6 +135,13 @@ public class TelaLogin extends AppCompatActivity {
         }catch (Exception exc){
             exc.printStackTrace();
         }
+    }
+
+    private boolean isEmpty(EditText etText) {
+        String text = etText.getText().toString().trim();
+        if (text.length()<1)
+            return true;
+        return false;
     }
 
     private void salvarDados(){

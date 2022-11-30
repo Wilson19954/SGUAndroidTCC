@@ -53,9 +53,9 @@ public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosViewHolder> {
         viewHolder.descProj.setText(listaProjetos.get(position).getDesc());
         viewHolder.custoProj.setText(listaProjetos.get(position).getCusto());
 
-        byte[] converteBase64 = Base64.decode(listaProjetos.get(position).getImg(), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
-        viewHolder.imageProj.setImageBitmap(bitmap);
+        //byte[] converteBase64 = Base64.decode(listaProjetos.get(position).getImg(), Base64.DEFAULT);
+        //Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
+        //viewHolder.imageProj.setImageBitmap(bitmap);
 
     }
 
@@ -120,9 +120,9 @@ class ProjetosViewHolder extends RecyclerView.ViewHolder{
     public ProjetosViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        imageProj = itemView.findViewById(R.id.imageProj);
-        nomeProj = itemView.findViewById(R.id.nomeProj);
-        custoProj = itemView.findViewById(R.id.custoProj);
+        imageProj = itemView.findViewById(R.id.imagePub);
+        nomeProj = itemView.findViewById(R.id.nomePub);
+        custoProj = itemView.findViewById(R.id.dataPub);
         descProj = itemView.findViewById(R.id.descProj);
     }
 }

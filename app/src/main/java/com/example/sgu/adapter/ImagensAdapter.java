@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ImagensAdapter extends RecyclerView.Adapter<ImagensAdapter.ImagensViewHolder> {
     //Lista de imagens da classe
-    List<Uri> listaImagens;
+    private List<Uri> listaImagens;
 
     //Construtor
     public ImagensAdapter(List<Uri> listaImagens) {

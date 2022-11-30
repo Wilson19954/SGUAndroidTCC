@@ -25,14 +25,22 @@
         <item>Esportes</item>
         <item>Tecnologia</item>
         <item>Empreendimento</item>
+        <item>Cultura</item>
+        <item>Entretenimento</item>
     </string-array>
 
     <string-array name="spnCategoriasProj">
-        <item>Educação</item>
-        <item>Saúde</item>
-        <item>Esportes</item>
-        <item>Tecnologia</item>
+        <item>Projeto Educacional</item>
+        <item>Projeto de Saúde</item>
+        <item>Projeto Esportivo</item>
+        <item>Projeto Tecnológico</item>
         <item>Empreendimento</item>
+        <item>Projeto Cultural</item>
+        <item>Projeto de Pesquisa</item>
+        <item>Projeto Empresarial</item>
+        <item>Projeto Pessoal</item>
+        <item>Projeto Social</item>
+
     </string-array>
 
     <string-array name="spnTipoCadastro">

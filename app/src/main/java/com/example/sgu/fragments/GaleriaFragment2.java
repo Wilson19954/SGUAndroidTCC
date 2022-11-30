@@ -8,48 +8,42 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
+import com.example.sgu.adapter.GaleriaAdapter;
+import com.example.sgu.classes.Galeria;
 import com.example.sgu.telas.TelaAdicionarProjeto;
-import com.example.sgu.adapter.ProjetosAdapter;
-import com.example.sgu.classes.Projetos;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProjetosFragment#newInstance} factory method to
+ * Use the {@link GaleriaFragment2#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProjetosFragment extends Fragment {
-    List<Projetos> listaProjetos = new ArrayList<>();
-    String document;
-    ImageView adicionarProjetos;
-    RecyclerView recyclerView;
+public class GaleriaFragment2 extends Fragment {
 
+    List<Galeria> galeria = new ArrayList<>();
+    RecyclerView recyclerView;
     String codproj;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -61,7 +55,7 @@ public class ProjetosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProjetosFragment() {
+    public GaleriaFragment2() {
         // Required empty public constructor
     }
 
@@ -71,17 +65,18 @@ public class ProjetosFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProjetosFragment.
+     * @return A new instance of fragment GaleriaFragment2.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProjetosFragment newInstance(String param1, String param2) {
-        ProjetosFragment fragment = new ProjetosFragment();
+    public static GaleriaFragment2 newInstance(String param1, String param2) {
+        GaleriaFragment2 fragment = new GaleriaFragment2();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,40 +85,28 @@ public class ProjetosFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_projetos, container, false);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_galeria2, container, false);
     }
-
     @Override
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adicionarProjetos = view.findViewById(R.id.adicionarProjetos);
-
-        BuscarDadosWebService();
-
-        adicionarProjetos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TelaAdicionarProjeto.class));
-            }
-        });
+        int numberOfColumns = 3;
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
+            BuscarDadosGaleriaWebService();
 
     }
 
-    private void recuperarDados(){
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        document = sharedPref.getString("doc","");
-    }
-
-    private void BuscarDadosWebService(){
+    private void BuscarDadosGaleriaWebService(){
         recuperarDados();
+        String url = "http://10.0.2.2:5000/api/Galeria/search/"+ codproj;
 
-        String url = "http://10.0.2.2:5000/api/Projetos/search/" + document;
         RequestQueue solicitacao = Volley.newRequestQueue(getContext());
         JsonArrayRequest envio = new JsonArrayRequest(
                 Request.Method.GET,
@@ -135,47 +118,29 @@ public class ProjetosFragment extends Fragment {
                         for(int i=0 ; i<response.length() ; i++){
                             try {
                                 JSONObject object = response.getJSONObject(i);
-                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                Date dataFinal = null;
-                                try {
-                                    dataFinal = format.parse(object.getString("data"));
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                Projetos proj = new Projetos(object.getString("cod"),
-                                        object.getString("desc"),
-                                        object.getString("custo"),
-                                        object.getString("tag"),
-                                        object.getString("nome"),
-                                        object.getString("doc_user"),
-                                        dataFinal.getTime(),
-                                        object.getString("img"));
-                                listaProjetos.add(proj);
+                                Galeria  img = new Galeria(object.getString("foto"));
+                                galeria.add(img);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            ProjetosAdapter adapter = new ProjetosAdapter(listaProjetos, getContext());
+                            GaleriaAdapter adapter = new GaleriaAdapter(galeria, getContext());
                             recyclerView.setAdapter(adapter);
-
-                            codproj = listaProjetos.get(i).getCod();
-                            SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putString("codproj", codproj);
-                            editor.apply();
-
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getActivity(), "Sem Projetos Cadastrados", Toast.LENGTH_SHORT).show();
             }
         }
         );
         solicitacao.add(envio);
-
     }
 
+    private void recuperarDados(){
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        codproj = sharedPref.getString("codprojperfil","");
+    }
 }

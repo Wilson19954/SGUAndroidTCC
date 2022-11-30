@@ -28,8 +28,8 @@ public class SplashScreen extends Activity implements Runnable {
                 .into(gif);
 
         Handler handler = new Handler();
-        // define o tempo de execução em 2 segundos
-        handler.postDelayed(this, 2000);
+        // define o tempo de execução em 5 segundos
+        handler.postDelayed(this, 5000);
     }
 
     public void run(){

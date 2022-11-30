@@ -4,10 +4,12 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,13 +41,15 @@ import java.io.IOException;
 
 public class TelaAdicionarPublicacao extends AppCompatActivity {
 
-    ImageView imgPub;
-    EditText edDesc, edDoc;
-    Spinner spnCategoria;
-    Bitmap fotoEscolhida, fotoBuscada;
-    ImageView btEscolherFoto, btGaleria;
-    Button btPublicar;
-    String document;
+    private ImageView imgPub;
+    private EditText edDesc;
+    private Spinner spnCategoria;
+    private Bitmap fotoEscolhida, fotoBuscada;
+    private ImageView btEscolherFoto, btGaleria;
+    private Button btPublicar;
+    private String document;
+
+    private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,23 +64,22 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
         btGaleria = findViewById(R.id.btGaleria);
 
         btEscolherFoto.setOnClickListener(view -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            resultadoCamera.launch(cameraIntent);
+            AlertCamera("Abrir camera", "Autoriza o aplicativo acessar sua câmera?");
         });
 
         btPublicar.setOnClickListener(view -> {
-            enviarDadosWebservice();
-            /*if(camposVazios()){
-                Toast.makeText(TelaAdicionarPublicacao.this, "Verifique se ficou algum campo vazio", Toast.LENGTH_SHORT).show();
-            }else{
+            if(isEmpty(edDesc)){
+                Toast.makeText(this, "Não deixe de escrever na sua publicação", Toast.LENGTH_SHORT).show();
+            } else {
+                if(fotoEscolhida == null && fotoBuscada == null){
+                    Toast.makeText(this, "Escolha uma imagem para sua publicação", Toast.LENGTH_SHORT).show();
+                } else {
                     enviarDadosWebservice();
-            }*/
+                }
+            }
         });
-
         btGaleria.setOnClickListener(view -> {
-            Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
-            galeriaIntent.setType("image/*");
-            startActivityForResult(galeriaIntent, 1);
+            AlertGaleria("Abrir Galeria", "Autoriza o aplicativo acessar sua galeria de fotos?");
         });
 
     }
@@ -171,21 +175,6 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
             }
         }
 
-
-
-    private boolean camposVazios(){
-        ConstraintLayout telaComponentes = findViewById(R.id.telaPublicacoes);
-        for (int i = 0; i < telaComponentes.getChildCount(); i++) {
-            View view = telaComponentes.getChildAt(i);
-            if (view instanceof EditText) {
-                if(((EditText) view).getText().toString().equals("")){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     private void limparCampos(){
         ConstraintLayout telaComponentes = findViewById(R.id.telaPublicacoes);
         for (int i = 0; i < telaComponentes.getChildCount(); i++) {
@@ -194,6 +183,58 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
                 ((EditText) view).setText("");
             }
         }
+    }
+
+    private void AlertCamera(String titulo, String mensagem){
+        AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
+        configAlert.setTitle(titulo);
+        configAlert.setMessage(mensagem);
+
+        configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                resultadoCamera.launch(cameraIntent);
+            }
+        });
+        configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert.cancel();
+            }
+        });
+        alert = configAlert.create();
+        alert.show();
+    }
+
+    private void AlertGaleria(String titulo, String mensagem){
+        AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
+        configAlert.setTitle(titulo);
+        configAlert.setMessage(mensagem);
+
+        configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galeriaIntent.setType("image/*");
+                startActivityForResult(galeriaIntent, 1);
+            }
+        });
+        configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert.cancel();
+            }
+        });
+        alert = configAlert.create();
+        alert.show();
+    }
+
+    private boolean isEmpty(EditText etText) {
+        String text = etText.getText().toString().trim();
+        if (text.length()<1)
+            return true;
+        return false;
     }
 
 }

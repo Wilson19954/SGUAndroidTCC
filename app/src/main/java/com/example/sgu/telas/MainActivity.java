@@ -9,8 +9,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -44,36 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
     List<Publi> listaPubli = new ArrayList<>();
     List<Usuario> listaUsuario = new ArrayList<>();
-    ImageView adicionarPub, iconPerfil, imgLog;
+    ImageView adicionarPub, iconPerfil, imgLog, fotoPerfil4;
     SwipeRefreshLayout swipe;
     RecyclerView recyclerView;
     TextView nomePerfil, tipoUser, btsair;
     String document;
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -100,14 +78,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         imgLog = findViewById(R.id.imgLogo);
-        nomePerfil = findViewById(R.id.txtnomeperfil);
-        tipoUser = findViewById(R.id.tipoUser);
         iconPerfil = findViewById(R.id.iconperfil);
         adicionarPub = findViewById(R.id.adicionarPub2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
         swipe = findViewById(R.id.swipe);
         btsair = findViewById(R.id.sair);
+        fotoPerfil4 = findViewById(R.id.fotoPerfil4);
+
+        fotoPerfil4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TelaPerfilP.class));
+            }
+        });
 
         btsair.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,16 +111,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        nomePerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TelaPerfilP.class));
-            }
-        });
         iconPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TelaPerfilP.class));
+                deletarSharedPreferences();
+                startActivity(new Intent(MainActivity.this, TelaLogin.class));
+                MainActivity.this.finish();
             }
         });
 
@@ -153,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
                RearrangeItems();
             }
         });
-
     }
+
     private void enviarDadosPubWebservice(){
         String url = "http://10.0.2.2:5000/api/Publicacoes";
         RequestQueue solicitacao = Volley.newRequestQueue(this);
@@ -229,8 +210,9 @@ public class MainActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            nomePerfil.setText(listaUsuario.get(i).getNome());
-                            tipoUser.setText(listaUsuario.get(i).getTipo());
+                            byte[] converteBase64 = Base64.decode(listaUsuario.get(i).getImg(), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
+                            fotoPerfil4.setImageBitmap(bitmap);
                         }
                     }
                 }, new Response.ErrorListener() {

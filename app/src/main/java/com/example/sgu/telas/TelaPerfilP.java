@@ -21,7 +21,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
+import com.example.sgu.adapter.ProjetosAdapter;
 import com.example.sgu.adapter.VPAdapter;
+import com.example.sgu.classes.Projetos;
 import com.example.sgu.classes.Usuario;
 import com.example.sgu.fragments.GaleriaFragment;
 import com.example.sgu.fragments.ProjetosFragment;
@@ -32,7 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TelaPerfilP extends AppCompatActivity {
@@ -59,8 +64,27 @@ public class TelaPerfilP extends AppCompatActivity {
         endPerfil = findViewById(R.id.enderecoPerfil);
         telPerfil = findViewById(R.id.telefonePerfil);
         emPerfil = findViewById(R.id.emailPerfil);
-        recuperarDados();
 
+        tabLayout.setupWithViewPager(viewPager);
+
+        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        vpAdapter.addFragment(new PublicacoesFragment(), "PUBS");
+        vpAdapter.addFragment(new ProjetosFragment(), "PROJETOS");
+        vpAdapter.addFragment(new GaleriaFragment(), "GALERIA");
+
+        viewPager.setAdapter(vpAdapter);
+
+        buscarUsuario();
+
+    }
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        document = sharedPref.getString("doc","");
+    }
+
+    private void buscarUsuario(){
+        recuperarDados();
         String url = "http://10.0.2.2:5000/api/Usuario/buscar/" + document;
         RequestQueue solicitacao = Volley.newRequestQueue(this);
         JsonArrayRequest envio = new JsonArrayRequest(
@@ -81,7 +105,7 @@ public class TelaPerfilP extends AppCompatActivity {
                                         object.getString("img"),
                                         object.getString("tipo"),
                                         object.getString("senha"));
-                                        listaUsuario.add(u);
+                                listaUsuario.add(u);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -103,19 +127,7 @@ public class TelaPerfilP extends AppCompatActivity {
             }
         });
         solicitacao.add(envio);
-        tabLayout.setupWithViewPager(viewPager);
 
-        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        vpAdapter.addFragment(new PublicacoesFragment(), "Publicações");
-        vpAdapter.addFragment(new ProjetosFragment(), "Projetos");
-        vpAdapter.addFragment(new GaleriaFragment(), "Galeria");
-
-        viewPager.setAdapter(vpAdapter);
-
-    }
-        private void recuperarDados(){
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        document = sharedPref.getString("doc","");
     }
 
 }

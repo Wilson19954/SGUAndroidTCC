@@ -10,51 +10,77 @@
     tools:context=".telas.TelaPerfilP">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="411dp"
-        android:layout_height="140dp"
+        android:layout_width="410dp"
+        android:layout_height="201dp"
         android:backgroundTint="#251F47"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="193dp"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgPerfil"
-                android:layout_width="205dp"
-                android:layout_height="65dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/a" />
+            android:layout_height="197dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="126dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgPerfil"
+                    android:layout_width="56dp"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/a" />
+
+                <LinearLayout
+                    android:layout_width="318dp"
+                    android:layout_height="115dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nomePerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:text="nome"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/descPerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="59dp"
+                        android:text="bio"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="388dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nomePerfil"
+                    android:id="@+id/emailPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="nome"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/descPerfil"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="bio"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/inter"
+                    android:text="mail"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/telefonePerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/inter"
                     android:text="tel"
                     android:textColor="@color/white" />
 
@@ -62,49 +88,54 @@
                     android:id="@+id/enderecoPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/inter"
                     android:text="endereco"
                     android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/emailPerfil"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="mail"
-                    android:textColor="@color/white" />
             </LinearLayout>
+
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:background="#251F47"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="220dp"
+        android:background="#251F47"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabSelectedTextColor="#A5C4D4"
+        app:tabTextColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="PUBS" />
+            android:text="PUBS"
+            android:textColor="@color/white" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PROJETOS" />
+            android:text="PROJETOS"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GALERIA"
+            android:textColor="@color/white" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="405dp"
-        android:layout_height="485dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="6dp"
+        android:layout_width="411dp"
+        android:layout_height="462dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 

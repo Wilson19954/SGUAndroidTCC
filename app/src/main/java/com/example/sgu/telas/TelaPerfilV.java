@@ -24,6 +24,7 @@ import com.example.sgu.R;
 import com.example.sgu.adapter.VPAdapter;
 import com.example.sgu.adapter.VPAdapter2;
 import com.example.sgu.classes.Usuario;
+import com.example.sgu.fragments.GaleriaFragment2;
 import com.example.sgu.fragments.ProjetosFragment;
 import com.example.sgu.fragments.ProjetosFragment2;
 import com.example.sgu.fragments.PublicacoesFragment;
@@ -67,8 +68,9 @@ public class TelaPerfilV extends AppCompatActivity {
 
         BuscarDadosWebService();
         VPAdapter2 vpAdapter2 = new VPAdapter2(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        vpAdapter2.addFragment(new PublicacoesFragments2(), "Publicações");
-        vpAdapter2.addFragment(new ProjetosFragment2(), "Projetos");
+        vpAdapter2.addFragment(new PublicacoesFragments2(), "PUBS");
+        vpAdapter2.addFragment(new ProjetosFragment2(), "PROJETOS");
+        vpAdapter2.addFragment(new GaleriaFragment2(), "GALERIA");
 
         viewPager.setAdapter(vpAdapter2);
 

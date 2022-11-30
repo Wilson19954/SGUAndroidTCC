@@ -50,6 +50,7 @@ public class ProjetosFragment2 extends Fragment {
     ImageView adicionarProjetos;
     RecyclerView recyclerView;
     List<Projetos> listaProjetos = new ArrayList<>();
+    String codproj;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -147,6 +148,12 @@ public class ProjetosFragment2 extends Fragment {
                             }
                             ProjetosAdapter adapter = new ProjetosAdapter(listaProjetos, getContext());
                             recyclerView.setAdapter(adapter);
+
+                            codproj = listaProjetos.get(i).getCod();
+                            SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("codprojperfil", codproj);
+                            editor.apply();
 
                         }
                     }
