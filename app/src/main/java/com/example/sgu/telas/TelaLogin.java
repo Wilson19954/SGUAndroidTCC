@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.EsqueciSenha;
 import com.example.sgu.R;
 import com.example.sgu.classes.SplashScreen;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 public class TelaLogin extends AppCompatActivity {
 
     Button btLogin;
-    TextView criarconta;
+    TextView criarconta, forgotpass;
     EditText edDocLogin;
     EditText edSenhaLogin;
     String doc;
@@ -69,11 +70,18 @@ public class TelaLogin extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         recuperarDados();
-
+        forgotpass = findViewById(R.id.txtForgotPass);
         criarconta = findViewById(R.id.txtCriarconta);
         edDocLogin = findViewById(R.id.edDocLogin);
         edSenhaLogin = findViewById(R.id.edSenhaLogin);
         btLogin = findViewById(R.id.btLogin);
+
+        forgotpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TelaLogin.this, EsqueciSenha.class));
+            }
+        });
 
         criarconta.setOnClickListener(new View.OnClickListener() {
             @Override

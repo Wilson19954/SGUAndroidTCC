@@ -5,11 +5,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.EditarCadastro;
 import com.example.sgu.R;
 import com.example.sgu.adapter.ProjetosAdapter;
 import com.example.sgu.adapter.VPAdapter;
@@ -47,8 +50,7 @@ public class TelaPerfilP extends AppCompatActivity {
     private ViewPager viewPager;
 
     TextView nomePerfil, descPerfil,endPerfil, telPerfil, emPerfil;
-    ImageView imgPerfil;
-
+    ImageView imgPerfil, imgEditarPerfil;
     String document;
 
     @Override
@@ -64,6 +66,7 @@ public class TelaPerfilP extends AppCompatActivity {
         endPerfil = findViewById(R.id.enderecoPerfil);
         telPerfil = findViewById(R.id.telefonePerfil);
         emPerfil = findViewById(R.id.emailPerfil);
+        imgEditarPerfil = findViewById(R.id.imgEditarPerfil);
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -73,8 +76,14 @@ public class TelaPerfilP extends AppCompatActivity {
         vpAdapter.addFragment(new GaleriaFragment(), "GALERIA");
 
         viewPager.setAdapter(vpAdapter);
-
         buscarUsuario();
+
+        imgEditarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TelaPerfilP.this, EditarCadastro.class));
+            }
+        });
 
     }
 
@@ -104,19 +113,38 @@ public class TelaPerfilP extends AppCompatActivity {
                                         object.getString("email"),
                                         object.getString("img"),
                                         object.getString("tipo"),
-                                        object.getString("senha"));
+                                        object.getString("senha"),
+                                        object.getString("cod_ver"));
                                 listaUsuario.add(u);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                             byte[] converteBase64 = Base64.decode(listaUsuario.get(i).getImg(), Base64.DEFAULT);
                             Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
+
                             imgPerfil.setImageBitmap(bitmap);
                             descPerfil.setText(listaUsuario.get(i).getDesc());
                             nomePerfil.setText(listaUsuario.get(i).getNome());
                             telPerfil.setText(listaUsuario.get(i).getTelefone());
                             endPerfil.setText(listaUsuario.get(i).getEndereco());
                             emPerfil.setText(listaUsuario.get(i).getEmail());
+
+                            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+
+                            editor.putString("emailuser", listaUsuario.get(i).getEmail());
+                            editor.putString("nomeuser", listaUsuario.get(i).getNome());
+                            editor.putString("senhauser", listaUsuario.get(i).getSenha());
+                            editor.putString("telefoneuser", listaUsuario.get(i).getTelefone());
+                            editor.putString("enderecouser", listaUsuario.get(i).getEndereco());
+                            editor.putString("descricaouser", listaUsuario.get(i).getDesc());
+                            editor.putString("cpfuser", listaUsuario.get(i).getDoc());
+
+                            editor.apply();
+
+
+
                         }
                     }
                 }, new Response.ErrorListener() {

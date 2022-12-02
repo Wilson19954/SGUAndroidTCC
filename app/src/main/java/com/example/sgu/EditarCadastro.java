@@ -1,4 +1,4 @@
-package com.example.sgu.telas;
+package com.example.sgu;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -6,10 +6,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.santalu.maskara.widget.MaskEditText;
 
@@ -37,24 +37,27 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class TelaCadastro extends AppCompatActivity {
+public class EditarCadastro extends AppCompatActivity {
 
-    private Button btCadastrar;
+    private Button btEditar;
     private ImageView imgcamera, imggaleria, imgFoto;
     private MaskEditText eddocumento, edtelefone;
-    private EditText  ednome, edendereco, edemail, edsenha, edbio;
+    private EditText ednome, edendereco, edemail, edsenha, edbio;
     private Spinner edtipouser;
     private Bitmap fotoEscolhida, fotoBuscada;
-
+    private String emailuser, nomeuser, senhauser, telefoneuser, enderecouser, descuser, docuser;
     private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_editar_cadastro);
 
-        btCadastrar = findViewById(R.id.btcriarconta);
+        btEditar = findViewById(R.id.btcriarconta);
         edtipouser = findViewById(R.id.etTipoUser);
         ednome = findViewById(R.id.etNome);
         edendereco = findViewById(R.id.etEndereco);
@@ -67,24 +70,15 @@ public class TelaCadastro extends AppCompatActivity {
         imggaleria = findViewById(R.id.imggaleria);
         imgFoto = findViewById(R.id.imgFoto);
 
-        btCadastrar.setOnClickListener(view -> {
-            Boolean preencherdoc = eddocumento.isDone();
-            Boolean preenchertel = edtelefone.isDone();
+        recuperarDados();
 
-            if(isEmpty(ednome) || isEmpty(edendereco) || isEmpty(edemail) || isEmpty(edbio) || isEmpty(edsenha) ){
-                Toast.makeText(this, "Verifique campos vazios", Toast.LENGTH_SHORT).show();
-            } else {
-                if(!preencherdoc || !preenchertel){
-                    Toast.makeText(this, "Complete todos os campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    if(fotoEscolhida == null && fotoBuscada == null){
-                        Toast.makeText(this, "Escolha uma foto para seu perfil", Toast.LENGTH_SHORT).show();
-                    } else {
-                        enviarDadosWebservice();
-                    }
-                }
-            }
-        });
+        edemail.setText(emailuser);
+        ednome.setText(nomeuser);
+        //edsenha.setText(senhauser);
+        edtelefone.setText(telefoneuser);
+        edendereco.setText(enderecouser);
+        edbio.setText(descuser);
+        eddocumento.setHint(docuser);
 
         imgcamera.setOnClickListener(view -> {
             AlertCamera("Abrir camera", "Autoriza o aplicativo acessar sua câmera?");
@@ -93,6 +87,42 @@ public class TelaCadastro extends AppCompatActivity {
         imggaleria.setOnClickListener(view -> {
             AlertGaleria("Abrir Galeria", "Autoriza o aplicativo acessar sua galeria de fotos?");
         });
+
+        btEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean preenchertel = edtelefone.isDone();
+                if(isEmpty(ednome) || isEmpty(edendereco) || isEmpty(edemail) || isEmpty(edbio)){
+                    Toast.makeText(EditarCadastro.this, "Verifique campos vazios", Toast.LENGTH_SHORT).show();
+                } else {
+                    if(!preenchertel){
+                        Toast.makeText(EditarCadastro.this, "Complete todos os campos", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if(isEmpty(edsenha)){
+                            Toast.makeText(EditarCadastro.this, "Confirme sua senha", Toast.LENGTH_SHORT).show();
+                        } else {
+                        if(fotoEscolhida == null && fotoBuscada == null){
+                            Toast.makeText(EditarCadastro.this, "Escolha uma nova foto para seu perfil", Toast.LENGTH_SHORT).show();
+                        } else {
+                            WebService();
+                            finish();
+                        }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void recuperarDados(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        emailuser = sharedPref.getString("emailuser","");
+        nomeuser = sharedPref.getString("nomeuser","");
+        senhauser = sharedPref.getString("senhauser","");
+        telefoneuser = sharedPref.getString("telefoneuser","");
+        enderecouser = sharedPref.getString("enderecouser","");
+        descuser = sharedPref.getString("descricaouser","");
+        docuser = sharedPref.getString("cpfuser","");
     }
 
     private void AlertCamera(String titulo, String mensagem){
@@ -136,72 +166,8 @@ public class TelaCadastro extends AppCompatActivity {
                 alert.cancel();
             }
         });
-
         alert = configAlert.create();
         alert.show();
-
-    }
-
-    private void enviarDadosWebservice(){
-        String url = "http://10.0.2.2:5000/api/Usuario";
-        try {
-            JSONObject dadosEnvio = new JSONObject();
-
-            dadosEnvio.put("nome", ednome.getText().toString());
-            dadosEnvio.put("email", edemail.getText().toString());
-            dadosEnvio.put("senha", edsenha.getText().toString());
-            dadosEnvio.put("endereco", edendereco.getText().toString());
-            dadosEnvio.put("telefone", edtelefone.getText().toString());
-            dadosEnvio.put("desc", edbio.getText().toString());
-            dadosEnvio.put("doc", eddocumento.getText().toString());
-            dadosEnvio.put("tipo",edtipouser.getSelectedItem().toString());
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if(fotoEscolhida != null){
-                    fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] imagemEmByte = stream.toByteArray();
-                    String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
-                    dadosEnvio.put("img", imagemEmString);
-                } else {
-                    fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] imagemEmByte = stream.toByteArray();
-                    String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
-                    dadosEnvio.put("img", imagemEmString);
-                }
-
-            JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
-                    url, dadosEnvio,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                if(response.getInt("status") == 200){
-                                    Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoOk, Snackbar.LENGTH_SHORT).show();
-                                    limparCampos();
-                                    imgFoto.setImageBitmap(null);
-                                }else{
-                                    Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-            );
-            RequestQueue requisicao = Volley.newRequestQueue(TelaCadastro.this);
-            requisicao.add(configRequisicao);
-
-        }catch (Exception exc){
-            exc.printStackTrace();
-        }
     }
 
     ActivityResultLauncher<Intent> resultadoCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -233,20 +199,71 @@ public class TelaCadastro extends AppCompatActivity {
         }
     }
 
+    private void WebService(){
+        String url = "http://10.0.2.2:5000/api/Usuario";
+        try {
+            JSONObject dadosEnvio = new JSONObject();
+
+            dadosEnvio.put("nome", ednome.getText().toString());
+            dadosEnvio.put("email", edemail.getText().toString());
+            dadosEnvio.put("senha", edsenha.getText().toString());
+            dadosEnvio.put("endereco", edendereco.getText().toString());
+            dadosEnvio.put("telefone", edtelefone.getText().toString());
+            dadosEnvio.put("desc", edbio.getText().toString());
+            dadosEnvio.put("tipo",edtipouser.getSelectedItem().toString());
+            dadosEnvio.put("doc", docuser);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if(fotoEscolhida != null){
+                fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] imagemEmByte = stream.toByteArray();
+                String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+                dadosEnvio.put("img", imagemEmString);
+            } else {
+                fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] imagemEmByte = stream.toByteArray();
+                String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+                dadosEnvio.put("img", imagemEmString);
+            }
+            JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.PUT,
+                    url, dadosEnvio,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if(response.getInt("status") == 200){
+                                    Snackbar.make(findViewById(R.id.telaEditar), "Conta Atualizada com Sucesso!", Snackbar.LENGTH_SHORT).show();
+                                    imgFoto.setImageBitmap(null);
+                                }else{
+                                    Snackbar.make(findViewById(R.id.telaEditar), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Snackbar.make(findViewById(R.id.telaEditar), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            Snackbar.make(findViewById(R.id.telaEditar), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+
+            RequestQueue requisicao = Volley.newRequestQueue(EditarCadastro.this);
+            requisicao.add(configRequisicao);
+
+        }catch (Exception exc){
+            exc.printStackTrace();
+        }
+    }
+
     private boolean isEmpty(EditText etText) {
         String text = etText.getText().toString().trim();
         if (text.length()<1)
             return true;
         return false;
-    }
-
-    private void limparCampos(){
-        ConstraintLayout telaComponentes = findViewById(R.id.telaCadastro);
-        for (int i = 0; i < telaComponentes.getChildCount(); i++) {
-            View view = telaComponentes.getChildAt(i);
-            if (view instanceof EditText) {
-                ((EditText) view).setText("");
-            }
-        }
     }
 }

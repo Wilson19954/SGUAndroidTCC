@@ -58,10 +58,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
     private Bitmap fotoEscolhida, fotoBuscada;
     private String document;
     private ImageView imgCam, imgProjeto, imgGaleria;
-    private ListView listaView;
     private List<Uri> listaImagens = new ArrayList<>();
-    private List<Galeria> listaGaleria = new ArrayList<>();
-    private RecyclerView recyclerView;
     private AlertDialog alert;
 
     @Override
@@ -78,7 +75,6 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
         imgProjeto = findViewById(R.id.imgProjeto);
         imgGaleria = findViewById(R.id.imgGal);
         btTeste = findViewById(R.id.btTeste);
-        //listaView = findViewById(R.id.listaFotos);
 
         imgGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +102,6 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
                        enviarDadosWebservice();
                    }
                }
-
-
-
                 enviarDadosWebservice();
             }
         });

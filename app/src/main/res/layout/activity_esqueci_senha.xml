@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TelaForgotPass"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#251F47"
+
+    tools:context=".EsqueciSenha">
+
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="286dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="60dp"
+        android:text="Após isso a SGU irá enviar um email com um token de confirmação"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btEnviarToken" />
+
+    <EditText
+        android:id="@+id/emailToken"
+        android:layout_width="287dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt1" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="305dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="52dp"
+        android:text="Digite seu email para confirmarmos quem é você"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btEnviarToken"
+        android:layout_width="193dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="108dp"
+        android:backgroundTint="#404E7C"
+        android:text="Enviar Token"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailToken" />
+
+    <TextView
+        android:id="@+id/txtToken"
+        android:layout_width="319dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="20dp"
+        android:text="Digite o token que foi enviado ao seu email no campo abaixo"
+        android:textColor="#676767"
+        app:layout_constraintBottom_toTopOf="@+id/edDigitarToken"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edDigitarToken"
+        android:layout_width="287dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="52dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt2" />
+
+    <Button
+        android:id="@+id/btRecuperarSenha"
+        android:layout_width="193dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="108dp"
+        android:backgroundTint="#404E7C"
+        android:enabled="false"
+        android:text="Recuperar Senha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edDigitarToken" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

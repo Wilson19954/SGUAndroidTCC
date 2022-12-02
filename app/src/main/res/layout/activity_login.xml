@@ -23,14 +23,14 @@
         android:id="@+id/btLogin"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="124dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="128dp"
         android:backgroundTint="#404E7C"
         android:text="Login"
         android:textColor="#FFFFFF"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edSenhaLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPass" />
 
     <EditText
         android:id="@+id/edSenhaLogin"
@@ -49,26 +49,25 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginBottom="100dp"
         android:text="Não tem uma conta?"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txtCriarconta"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtCriarconta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="100dp"
         android:text="Crie já a sua."
         android:textColor="#A5C4D4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView4"
@@ -118,5 +117,16 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/txtForgotPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="87dp"
+        android:layout_marginTop="11dp"
+        android:text="Esqueceu sua senha?"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edSenhaLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

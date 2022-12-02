@@ -28,7 +28,7 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgPerfil"
-                    android:layout_width="56dp"
+                    android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="40dp"
@@ -37,14 +37,14 @@
                     app:srcCompat="@drawable/a" />
 
                 <LinearLayout
-                    android:layout_width="318dp"
+                    android:layout_width="275dp"
                     android:layout_height="115dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/nomePerfil"
-                        android:layout_width="match_parent"
+                        android:layout_width="246dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="50dp"
                         android:text="nome"
@@ -52,12 +52,21 @@
 
                     <TextView
                         android:id="@+id/descPerfil"
-                        android:layout_width="match_parent"
+                        android:layout_width="244dp"
                         android:layout_height="59dp"
                         android:text="bio"
                         android:textColor="@color/white" />
 
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgEditarPerfil"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="20dp"
+                    app:srcCompat="@android:drawable/ic_menu_edit" />
+
             </LinearLayout>
 
             <LinearLayout

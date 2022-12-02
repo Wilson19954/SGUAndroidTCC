@@ -3,9 +3,9 @@ package com.example.sgu.classes;
 public class Usuario {
 
     private int id;
-    private String endereco, nome, desc, doc, telefone, email, img, tipo, senha;
+    private String endereco, nome, desc, doc, telefone, email, img, tipo, senha, cod_ver;
 
-    public Usuario(int id, String endereco, String nome, String desc, String doc, String telefone, String email, String img, String tipo, String senha) {
+    public Usuario(int id, String endereco, String nome, String desc, String doc, String telefone, String email, String img, String tipo, String senha, String cod_ver) {
         this.id = id;
         this.endereco = endereco;
         this.nome = nome;
@@ -16,9 +16,10 @@ public class Usuario {
         this.img = img;
         this.tipo = tipo;
         this.senha = senha;
+        this.cod_ver = cod_ver;
     }
 
-    public Usuario(String endereco, String nome, String desc, String doc, String telefone, String email, String img, String tipo, String senha) {
+    public Usuario(String endereco, String nome, String desc, String doc, String telefone, String email, String img, String tipo, String senha, String cod_ver) {
         this.endereco = endereco;
         this.nome = nome;
         this.desc = desc;
@@ -28,6 +29,7 @@ public class Usuario {
         this.img = img;
         this.tipo = tipo;
         this.senha = senha;
+        this.cod_ver = cod_ver;
     }
 
     public Usuario(){}
@@ -71,5 +73,10 @@ public class Usuario {
     public String getSenha() {return senha;}
 
     public void setSenha(String senha) {this.senha = senha;}
+
+    public String getCod_ver() {return cod_ver;}
+
+    public void setCod_ver(String cod_ver) {this.cod_ver = cod_ver;}
+
 
 }

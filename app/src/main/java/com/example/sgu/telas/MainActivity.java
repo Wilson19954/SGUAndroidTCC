@@ -205,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
                                         object.getString("email"),
                                         object.getString("img"),
                                         object.getString("senha"),
-                                        object.getString("tipo"));
+                                        object.getString("tipo"),
+                                        object.getString("cod_ver"));
                                 listaUsuario.add(u);
                             } catch (JSONException e) {
                                 e.printStackTrace();

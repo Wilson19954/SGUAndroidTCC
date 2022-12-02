@@ -102,7 +102,8 @@ public class TelaPerfilV extends AppCompatActivity {
                                         object.getString("email"),
                                         object.getString("img"),
                                         object.getString("tipo"),
-                                        object.getString("senha"));
+                                        object.getString("senha"),
+                                        object.getString("cod_ver"));
                                 listaUsuario.add(u);
                             } catch (JSONException e) {
                                 e.printStackTrace();
