@@ -35,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.AdicionarFotosGaleria;
 import com.example.sgu.R;
 import com.example.sgu.adapter.ImagensAdapter;
 import com.example.sgu.classes.Galeria;
@@ -54,17 +55,17 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
 
     private EditText edNomeProjeto, edCustoProjeto, edDescricaoProjeto;
     private Spinner spnCategoriaProjeto;
-    private Button btCadastrarProjeto, btTeste;
+    private Button btCadastrarProjeto;
     private Bitmap fotoEscolhida, fotoBuscada;
     private String document;
-    private ImageView imgCam, imgProjeto, imgGaleria;
-    private List<Uri> listaImagens = new ArrayList<>();
+    private ImageView imgCam, imgProjeto, imgGal, adcFotosGal;
     private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_projeto);
+
 
         edNomeProjeto = findViewById(R.id.edNomeProj);
         edCustoProjeto = findViewById(R.id.edCustoProj);
@@ -73,20 +74,28 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
         btCadastrarProjeto = findViewById(R.id.btCadProj);
         imgCam = findViewById(R.id.imgCam);
         imgProjeto = findViewById(R.id.imgProjeto);
-        imgGaleria = findViewById(R.id.imgGal);
-        btTeste = findViewById(R.id.btTeste);
+        imgGal = findViewById(R.id.imgGal);
 
-        imgGaleria.setOnClickListener(new View.OnClickListener() {
+        adcFotosGal = findViewById(R.id.adicionarFotosGaleria);
+
+        adcFotosGal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertGaleria("Abrir Galeria", "Autoriza o aplicativo acessar sua galeria de fotos?");
+                startActivity(new Intent(TelaAdicionarProjeto.this, AdicionarFotosGaleria.class));
+            }
+        });
+
+        imgGal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertGaleriaPrincipal("Abrir Galeria", "Autoriza o aplicativo acessar sua galeria de fotos?");
             }
         });
 
         imgCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertCamera("Abrir camera", "Autoriza o aplicativo acessar sua câmera?");
+                AlertCameraPrincipal("Abrir câmera","Autoriza o aplicativo acessar sua câmera?");
             }
         });
 
@@ -100,128 +109,45 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
                        Toast.makeText(TelaAdicionarProjeto.this, "Escolha uma imagem principal para seu projeto", Toast.LENGTH_SHORT).show();
                    } else {
                        enviarDadosWebservice();
+                       adcFotosGal.setVisibility(View.VISIBLE);
                    }
                }
                 enviarDadosWebservice();
             }
         });
 
-        btTeste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listaImagens.size() == 0){
-                    Toast.makeText(TelaAdicionarProjeto.this, "Nâo há imagens para cadastrar", Toast.LENGTH_SHORT).show();
-                }else{
-                    try{
-                        JSONArray arrayFotos = new JSONArray();
-                        JSONObject cadaFoto = new JSONObject();
-
-                        //Converter as imagens para Base64
-                        for (Uri uri : listaImagens) {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , uri);
-
-                            //Converter a imagem de Bitmap para String no formato Base64
-                            //Objeto para poder converter a imagem em vetor de byte
-                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            //Populando o "stream" com o conteúdo da imagem
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                            //Convertendo o "stream" para um vetor de byte
-                            byte[] imagemEmByte = stream.toByteArray();
-                            //Converter o vetor de byte para Base64
-                            String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
-                            //Adicionar na lista
-
-                            stream.flush();
-                            stream.reset();
-                            Log.d("TESTEIMG", " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + imagemEmString);
-
-                            cadaFoto.put("foto", imagemEmString);
-                            arrayFotos.put(cadaFoto);
-                        }
-
-                        JSONObject dados = new JSONObject();
-                        dados.put("Galeria", arrayFotos);
-
-                        String url = "http://10.0.2.2:5000/api/Galeria";
-
-                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, dados, new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    if(response.getInt("status") == 200) {
-                                        Toast.makeText(TelaAdicionarProjeto.this, "Fotos cadastradas", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(TelaAdicionarProjeto.this, "Erro", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (JSONException e) {
-                                    Log.d("TESTEIMG", e.getMessage());
-                                    Log.d("TESTEIMG", e.getCause().getMessage());
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Toast.makeText(TelaAdicionarProjeto.this, "Erro", Toast.LENGTH_SHORT).show();
-                                        error.printStackTrace();
-                                    }
-                                });
-
-                        RequestQueue requisicao = Volley.newRequestQueue(TelaAdicionarProjeto.this);
-                        requisicao.add(request);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
     }
 
-    ActivityResultLauncher<Intent> resultadoCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    ActivityResultLauncher<Intent> cameraImgPrincipal = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode() == RESULT_OK){
                 Bundle extras = result.getData().getExtras();
                 fotoEscolhida = (Bitmap) extras.get("data");
                 imgProjeto.setImageBitmap(fotoEscolhida);
-                imgProjeto.setRotation(90);
                 imgProjeto.setVisibility(View.VISIBLE);
             }
         }
     });
 
-    ActivityResultLauncher<Intent> resultadoGaleria = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == RESULT_OK){
-                if(result.getData().getClipData() != null){
-                    //Cria um objeto do ClipData para recuperar todas as imagens
-                    ClipData clipData = result.getData().getClipData();
-                    //Verifica a quantidade de imagens selecionadas
-                    int totalImagens = clipData.getItemCount();
-
-                    for (int i=0 ; i<totalImagens ; i++){
-                        //Recuperar cada imagem selecionada
-                        Uri imageurl = clipData.getItemAt(i).getUri();
-                        listaImagens.add(imageurl);
-                    }
-                } else {
-                    //Se houver somente uma imagem
-                    Uri imageurl = result.getData().getData();
-                    listaImagens.add(imageurl);
+    //evento para abrir galeria e escolher foto unica
+    public void onActivityResult(int requestCode, int resultCode, Intent dados) {
+        super.onActivityResult(requestCode, resultCode, dados);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Uri imageuri = dados.getData();
+                fotoBuscada = null;
+                try {
+                    fotoBuscada = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageuri);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                //Inicia o RecylerView
-                RecyclerView recyclerView = findViewById(R.id.recyclerImagens);
-                //Atribui o layout do tipo Horizontal ao recyclerView
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),  LinearLayoutManager.HORIZONTAL, false));
-                //Inicia o Adapter das imagens com a lista de imagens
-                ImagensAdapter imgAdapter = new ImagensAdapter(listaImagens);
-                recyclerView.setAdapter(imgAdapter);
+                imgProjeto.setImageBitmap(fotoBuscada);
+                imgProjeto.setVisibility(View.VISIBLE);
             }
         }
-    });
+    }
+
 
     private void recuperarDados(){
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -242,31 +168,20 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
             dadosEnvio.put("nome", edNomeProjeto.getText().toString());
             dadosEnvio.put("doc_user", document);
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] imagemEmByte = stream.toByteArray();
-            String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
-            dadosEnvio.put("img", imagemEmString);
+            if(fotoEscolhida != null){
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] imagemEmByte = stream.toByteArray();
+                String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
 
-            /*
-            //Para cada imagem na lista ele repete o processo
-            for(Uri imagem : listaImagens){
-                //transforma imagemURI em BITMAP
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagem);
-
-                ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
-                //tranforma imagem bitmap em png
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream2);
-                //tranformando imagem em byte
-                byte[] imagemEmByte2 = stream2.toByteArray();
-                //transformando a imagem em string
-                String imagemEmString2 = Base64.encodeToString(imagemEmByte2, Base64.DEFAULT);
-                //adicionando a imagem em string em uma lista do tipo String
-                listaImagensString.add(imagemEmString2);
+                dadosEnvio.put("img", imagemEmString);
+            } else if(fotoBuscada != null){
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] imagemEmByte = stream.toByteArray();
+                String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+                dadosEnvio.put("img", imagemEmString);
             }
-
-            dadosEnvio.put("listaimg", listaImagensString);
-            //dadosEnvio.put("img", String.valueOf(listaImagensString));*/
 
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                     url, dadosEnvio,
@@ -302,7 +217,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
         }
     }
 
-    private void AlertCamera(String titulo, String mensagem){
+    private void AlertCameraPrincipal(String titulo, String mensagem){
         AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
         configAlert.setTitle(titulo);
         configAlert.setMessage(mensagem);
@@ -311,7 +226,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                resultadoCamera.launch(cameraIntent);
+                cameraImgPrincipal.launch(cameraIntent);
             }
         });
         configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
@@ -324,7 +239,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
         alert.show();
     }
 
-    private void AlertGaleria(String titulo, String mensagem){
+    private void AlertGaleriaPrincipal(String titulo, String mensagem){
         AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
         configAlert.setTitle(titulo);
         configAlert.setMessage(mensagem);
@@ -332,12 +247,9 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
         configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intentGaleria = new Intent();
-                //Comando para permitir que seja selecionada mais de uma foto por vez
-                intentGaleria.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intentGaleria.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                intentGaleria.setType("image/*");
-                resultadoGaleria.launch(intentGaleria);
+                Intent galeriaIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galeriaIntent.setType("image/*");
+                startActivityForResult(galeriaIntent, 1);
             }
         });
         configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
@@ -349,6 +261,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
         alert = configAlert.create();
         alert.show();
     }
+
 
     private boolean isEmpty(EditText etText) {
         String text = etText.getText().toString().trim();

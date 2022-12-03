@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.santalu.maskara.widget.MaskEditText;
 
@@ -37,9 +38,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class EditarCadastro extends AppCompatActivity {
 
@@ -104,8 +102,7 @@ public class EditarCadastro extends AppCompatActivity {
                         if(fotoEscolhida == null && fotoBuscada == null){
                             Toast.makeText(EditarCadastro.this, "Escolha uma nova foto para seu perfil", Toast.LENGTH_SHORT).show();
                         } else {
-                            WebService();
-                            finish();
+                            AlertAlterarCadastro("ALTERAR PERFIL","Realmente deseja alterar os dados do seu perfil?");
                         }
                         }
                     }
@@ -266,4 +263,27 @@ public class EditarCadastro extends AppCompatActivity {
             return true;
         return false;
     }
+
+    private void AlertAlterarCadastro(String titulo, String mensagem){
+        AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
+        configAlert.setTitle(titulo);
+        configAlert.setMessage(mensagem);
+
+        configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                WebService();
+                finish();
+            }
+        });
+        configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert.cancel();
+            }
+        });
+        alert = configAlert.create();
+        alert.show();
+    }
+
 }

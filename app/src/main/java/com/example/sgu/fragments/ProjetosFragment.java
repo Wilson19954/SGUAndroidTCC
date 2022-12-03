@@ -104,7 +104,7 @@ public class ProjetosFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adicionarProjetos = view.findViewById(R.id.adicionarProjetos);
 
-        BuscarDadosWebService();
+        BuscarProjetosWebService();
 
         adicionarProjetos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +120,7 @@ public class ProjetosFragment extends Fragment {
         document = sharedPref.getString("doc","");
     }
 
-    private void BuscarDadosWebService(){
+    private void BuscarProjetosWebService(){
         recuperarDados();
 
         String url = "http://10.0.2.2:5000/api/Projetos/search/" + document;

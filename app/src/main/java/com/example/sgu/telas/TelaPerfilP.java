@@ -22,11 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.sgu.EditarCadastro;
 import com.example.sgu.R;
-import com.example.sgu.adapter.ProjetosAdapter;
 import com.example.sgu.adapter.VPAdapter;
-import com.example.sgu.classes.Projetos;
 import com.example.sgu.classes.Usuario;
 import com.example.sgu.fragments.GaleriaFragment;
 import com.example.sgu.fragments.ProjetosFragment;
@@ -37,10 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TelaPerfilP extends AppCompatActivity {

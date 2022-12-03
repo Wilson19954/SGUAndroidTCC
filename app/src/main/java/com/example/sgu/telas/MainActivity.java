@@ -1,5 +1,6 @@
 package com.example.sgu.telas;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,12 +8,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView adicionarPub, iconPerfil, imgLog, fotoPerfil4;
     SwipeRefreshLayout swipe;
     RecyclerView recyclerView;
-    TextView nomePerfil, tipoUser, btsair;
+    TextView nomPerfil, tipoUser, btsair;
     String document;
+    AlertDialog alert;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         iconPerfil = findViewById(R.id.iconperfil);
         adicionarPub = findViewById(R.id.adicionarPub2);
         recyclerView = findViewById(R.id.recyclerView);
+        nomPerfil = findViewById(R.id.txtnomPerfil);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         swipe = findViewById(R.id.swipe);
@@ -98,8 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deletarSharedPreferences();
-                startActivity(new Intent(MainActivity.this, TelaLogin.class));
-                MainActivity.this.finish();
+                AlertLogout("SAIR","Realmente deseja finalizar sua sessão?");
             }
         });
 
@@ -115,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deletarSharedPreferences();
-                startActivity(new Intent(MainActivity.this, TelaLogin.class));
-                MainActivity.this.finish();
+                AlertLogout("SAIR","Realmente deseja finalizar sua sessão?");
             }
         });
 
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                             byte[] converteBase64 = Base64.decode(listaUsuario.get(i).getImg(), Base64.DEFAULT);
                             Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
                             fotoPerfil4.setImageBitmap(bitmap);
+                            nomPerfil.setText(listaUsuario.get(i).getNome());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -243,6 +247,28 @@ public class MainActivity extends AppCompatActivity {
         Collections.shuffle(listaPubli, new Random(System.currentTimeMillis()));
         PublicacoesAdapter adapter = new PublicacoesAdapter(listaPubli, MainActivity.this);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void AlertLogout(String titulo, String mensagem){
+        AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
+        configAlert.setTitle(titulo);
+        configAlert.setMessage(mensagem);
+
+        configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MainActivity.this, TelaLogin.class));
+                MainActivity.this.finish();
+            }
+        });
+        configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert.cancel();
+            }
+        });
+        alert = configAlert.create();
+        alert.show();
     }
 
     private void filterList(String text) {

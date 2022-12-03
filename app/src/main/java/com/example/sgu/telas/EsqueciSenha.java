@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.sgu.classes.SplashScreen;
-import com.example.sgu.telas.TelaLogin;
+import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -62,10 +61,10 @@ public class EsqueciSenha extends AppCompatActivity {
                     enviarEmail.setEnabled(false);
                     txt1.setTextColor(Color.parseColor("#676767"));
                     txt2.setTextColor(Color.parseColor("#676767"));
+
                 } else {
                     Toast.makeText(EsqueciSenha.this, "Digite seu email", Toast.LENGTH_SHORT).show();
                 }
-
 
             }
         });

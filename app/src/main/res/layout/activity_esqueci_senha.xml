@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#251F47"
 
-    tools:context=".EsqueciSenha">
+    tools:context=".telas.EsqueciSenha">
 
     <TextView
         android:id="@+id/txt2"
@@ -28,6 +28,7 @@
         android:layout_marginEnd="60dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
+        android:hint="example@gmail.com"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt1" />

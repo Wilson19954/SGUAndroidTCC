@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#251F47"
-    tools:context=".TelaRecuperarSenha">
+    tools:context=".telas.TelaRecuperarSenha">
 
     <Button
         android:id="@+id/btMudarSenha"
@@ -27,7 +27,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
@@ -39,7 +39,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -76,5 +76,8 @@
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

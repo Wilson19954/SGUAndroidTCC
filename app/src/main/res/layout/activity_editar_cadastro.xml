@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#251F47"
-    tools:context=".EditarCadastro">
+    tools:context=".telas.EditarCadastro">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,6 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="105dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:text="Altere seu Perfil Aqui"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textView11"

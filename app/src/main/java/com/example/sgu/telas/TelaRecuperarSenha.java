@@ -1,8 +1,10 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,7 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.sgu.telas.TelaLogin;
+import com.example.sgu.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -28,6 +30,7 @@ public class TelaRecuperarSenha extends AppCompatActivity {
     String emailRecuperado, novasenha;
     Button btMudarSenha;
     EditText edNovaSenha, edNovaSenha2;
+    AlertDialog alert;
 
 
     @Override
@@ -46,7 +49,7 @@ public class TelaRecuperarSenha extends AppCompatActivity {
                     if(!edNovaSenha.getText().toString().equals(edNovaSenha2.getText().toString())){
                         Toast.makeText(TelaRecuperarSenha.this, "As senhas não conferem", Toast.LENGTH_SHORT).show();
                     }else{
-                        enviarNovaSenhaWebService();
+                        AlertMudarSenha("TROCAR SENHA","Realmente deseja alterar sua senha?");
                     }
                 }
             }
@@ -108,5 +111,25 @@ public class TelaRecuperarSenha extends AppCompatActivity {
         if (text.length()<1)
             return true;
         return false;
+    }
+    private void AlertMudarSenha(String titulo, String mensagem){
+        AlertDialog.Builder configAlert = new AlertDialog.Builder(this);
+        configAlert.setTitle(titulo);
+        configAlert.setMessage(mensagem);
+
+        configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                enviarNovaSenhaWebService();
+            }
+        });
+        configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert.cancel();
+            }
+        });
+        alert = configAlert.create();
+        alert.show();
     }
 }
