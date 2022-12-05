@@ -23,7 +23,7 @@ public class SplashScreen extends Activity implements Runnable {
         gif = (ImageView) findViewById(R.id.gif2);
 
         Glide.with(this)
-                .load(R.drawable.splash2)
+                .load(R.drawable.splash3)
                 .asGif()
                 .into(gif);
 

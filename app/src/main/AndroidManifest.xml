@@ -16,7 +16,14 @@
         android:theme="@style/Theme.SGU"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".AdicionarFotosGaleria"
+            android:name=".telas.TelaEditarProjeto"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".telas.AdicionarFotosGaleria"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -24,13 +31,6 @@
         </activity>
         <activity
             android:name=".telas.TelaRecuperarSenha"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".TelaToken"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

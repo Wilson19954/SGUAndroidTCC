@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         btsair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletarSharedPreferences();
                 AlertLogout("SAIR","Realmente deseja finalizar sua sessão?");
             }
         });
@@ -257,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         configAlert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                deletarSharedPreferences();
                 startActivity(new Intent(MainActivity.this, TelaLogin.class));
                 MainActivity.this.finish();
             }

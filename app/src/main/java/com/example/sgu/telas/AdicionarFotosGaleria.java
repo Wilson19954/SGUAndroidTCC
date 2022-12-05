@@ -1,4 +1,4 @@
-package com.example.sgu;
+package com.example.sgu.telas;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -13,7 +13,6 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,8 +29,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sgu.R;
 import com.example.sgu.adapter.ImagensAdapter;
-import com.example.sgu.telas.TelaAdicionarProjeto;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,8 +78,6 @@ public class AdicionarFotosGaleria extends AppCompatActivity {
             }
         });
     }
-
-
     private void enviarlistaGaleriaWebService(){
         if(listaImagens.size() == 0){
             Toast.makeText(AdicionarFotosGaleria.this, "Nâo há imagens para cadastrar", Toast.LENGTH_SHORT).show();
@@ -88,7 +85,6 @@ public class AdicionarFotosGaleria extends AppCompatActivity {
             try{
                 JSONArray arrayFotos = new JSONArray();
                 JSONObject cadaFoto = new JSONObject();
-                //Converter as imagens para Base64
                 for (Uri uri : listaImagens) {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , uri);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();

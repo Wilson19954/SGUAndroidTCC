@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sgu.R;
+import com.example.sgu.adapter.ProjetosAdapterEdit;
 import com.example.sgu.telas.TelaAdicionarProjeto;
 import com.example.sgu.adapter.ProjetosAdapter;
 import com.example.sgu.classes.Projetos;
@@ -154,7 +155,7 @@ public class ProjetosFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            ProjetosAdapter adapter = new ProjetosAdapter(listaProjetos, getContext());
+                            ProjetosAdapterEdit adapter = new ProjetosAdapterEdit(listaProjetos, getContext());
                             recyclerView.setAdapter(adapter);
 
                             codproj = listaProjetos.get(i).getCod();
