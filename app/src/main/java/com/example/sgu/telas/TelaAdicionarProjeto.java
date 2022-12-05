@@ -48,6 +48,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
     private ImageView imgCam, imgProjeto, imgGal, adcFotosGal;
     private AlertDialog alert;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,7 +177,7 @@ public class TelaAdicionarProjeto extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 if(response.getInt("status") == 200){
-                                    Snackbar.make(findViewById(R.id.telaProjetos), R.string.avisoOk, Snackbar.LENGTH_SHORT).show();
+                                    Toast.makeText(TelaAdicionarProjeto.this, "Projeto Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                                 }else{
                                     Snackbar.make(findViewById(R.id.telaProjetos), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }

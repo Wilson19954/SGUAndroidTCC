@@ -79,7 +79,6 @@ public class TelaEditarProjeto extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(converteBase64, 0, converteBase64.length);
         imgProjeto.setImageBitmap(bitmap);
 
-
         imgCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +130,7 @@ public class TelaEditarProjeto extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 if(response.getInt("status") == 200){
-                                    Snackbar.make(findViewById(R.id.telaEditarProjeto), R.string.avisoOk, Snackbar.LENGTH_SHORT).show();
+                                    Toast.makeText(TelaEditarProjeto.this, "Projeto editado com sucesso!", Toast.LENGTH_SHORT).show();
                                 }else{
                                     Snackbar.make(findViewById(R.id.telaEditarProjeto), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }
