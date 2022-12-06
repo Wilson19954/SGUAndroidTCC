@@ -140,7 +140,7 @@ public class GaleriaFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Sem Projetos Cadastrados", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Sem Projetos Cadastrados", Toast.LENGTH_SHORT).show();
             }
         }
         );

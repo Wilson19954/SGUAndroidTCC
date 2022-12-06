@@ -170,7 +170,7 @@ public class ProjetosFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
 
             }
         }
