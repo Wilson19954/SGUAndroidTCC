@@ -77,10 +77,8 @@ public class EsqueciSenha extends AppCompatActivity {
                 } else {
                     Toast.makeText(EsqueciSenha.this, "Não deixe o token vazio", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 
     private void enviarEmailWebService(){

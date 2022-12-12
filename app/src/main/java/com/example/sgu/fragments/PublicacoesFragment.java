@@ -101,7 +101,7 @@ public class PublicacoesFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getContext(), "Erro ao conectar", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Erro ao conectar", Toast.LENGTH_SHORT).show();
             }
         }
         );

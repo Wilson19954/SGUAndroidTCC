@@ -121,6 +121,8 @@ public class TelaRecuperarSenha extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 enviarNovaSenhaWebService();
+                deletarSharedPreferences();
+                finish();
             }
         });
         configAlert.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
@@ -132,4 +134,13 @@ public class TelaRecuperarSenha extends AppCompatActivity {
         alert = configAlert.create();
         alert.show();
     }
+
+    public void deletarSharedPreferences()
+    {
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 }

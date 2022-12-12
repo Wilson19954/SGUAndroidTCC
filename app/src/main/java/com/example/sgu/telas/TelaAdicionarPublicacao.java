@@ -99,12 +99,20 @@ public class TelaAdicionarPublicacao extends AppCompatActivity {
             dadosEnvio.put("doc_user", document);
             dadosEnvio.put("tag",spnCategoria.getSelectedItem().toString());
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            //fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            fotoBuscada.compress(Bitmap.CompressFormat.PNG, 70, stream);
-            byte[] imagemEmByte = stream.toByteArray();
-            String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
-            dadosEnvio.put("img", imagemEmString);
+            if(fotoEscolhida != null){
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                fotoEscolhida.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] imagemEmByte = stream.toByteArray();
+                String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+
+                dadosEnvio.put("img", imagemEmString);
+            } else if(fotoBuscada != null){
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                fotoBuscada.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] imagemEmByte = stream.toByteArray();
+                String imagemEmString = Base64.encodeToString(imagemEmByte, Base64.DEFAULT);
+                dadosEnvio.put("img", imagemEmString);
+            }
 
             //Configurar a requisição que será enviada ao webservice
             JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,

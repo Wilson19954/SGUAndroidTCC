@@ -179,7 +179,9 @@ public class TelaCadastro extends AppCompatActivity {
                                     Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoOk, Snackbar.LENGTH_SHORT).show();
                                     limparCampos();
                                     imgFoto.setImageBitmap(null);
-                                }else{
+                                }else if(response.getInt("status") == 204){
+                                    Snackbar.make(findViewById(R.id.telaCadastro), "CPF ou email já cadastrado", Snackbar.LENGTH_SHORT).show();
+                                } else {
                                     Snackbar.make(findViewById(R.id.telaCadastro), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {

@@ -118,7 +118,7 @@ public class TelaLogin extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 if(response.getInt("status") == 200){
-                                    Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoAcessoOk, Snackbar.LENGTH_SHORT).show();
+                                    //Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoAcessoOk, Snackbar.LENGTH_SHORT).show();
                                     startActivity(new Intent(TelaLogin.this, SplashScreen.class));
                                 }else{
                                     Snackbar.make(findViewById(R.id.telaLogin),R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
@@ -133,7 +133,7 @@ public class TelaLogin extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            Snackbar.make(findViewById(R.id.telaLogin), "CPF ou senha inválidos", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(findViewById(R.id.telaLogin), "CPF ou senha incorretos", Snackbar.LENGTH_SHORT).show();
                         }
                     }
             );

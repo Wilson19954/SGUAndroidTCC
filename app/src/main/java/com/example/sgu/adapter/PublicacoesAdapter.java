@@ -179,10 +179,10 @@ public class PublicacoesAdapter extends RecyclerView.Adapter<PublicacoesViewHold
                     return d;
                 }
             }else{
-                return m + d;
+                return m;
             }
         }else{
-            return a + m + d;
+            return a;
         }
     }
 
