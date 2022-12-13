@@ -102,7 +102,7 @@ public class EsqueciSenha extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Snackbar.make(findViewById(R.id.TelaForgotPass), "Erro1", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(findViewById(R.id.TelaForgotPass), "Erro", Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -110,7 +110,7 @@ public class EsqueciSenha extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            Snackbar.make(findViewById(R.id.TelaForgotPass), "Erro2", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(findViewById(R.id.TelaForgotPass), "Token Enviado", Snackbar.LENGTH_SHORT).show();
                         }
                     }
             );
